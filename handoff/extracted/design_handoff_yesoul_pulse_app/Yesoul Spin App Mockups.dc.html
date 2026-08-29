@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>html{background:#101114}body{margin:0;background:#101114;font-family:'Chakra Petch',system-ui,sans-serif}a{color:#FFD23F}a:hover{color:#fff}.dv-turn{padding:40px 44px 32px;scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}.dv-tid{font:600 10px 'IBM Plex Mono',monospace;padding:3px 7px;background:#FFD23F;color:#101114;border-radius:4px;text-decoration:none}.dv-tname{font:600 14px/1.2 'Chakra Petch',sans-serif;color:#f0f0ec}.dv-opts{display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start;margin-top:28px}.dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}.dv-oid{font:600 10.5px 'IBM Plex Mono',monospace;padding:3px 7px;background:rgba(255,255,255,.12);color:#f0f0ec;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 'Chakra Petch',sans-serif;color:rgba(240,240,236,.6)}.dv-olabel b{color:#f0f0ec;font-weight:600}.dv-opt:target .dv-oid{background:#FFD23F;color:#101114}.dv-next{margin:26px 0 0;font:12px/1.5 'Chakra Petch',sans-serif;color:rgba(240,240,236,.45)}</style>
+</helmet>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">RIDE — a companion app for your Yesoul S3</span></div>
+<div style="max-width:620px;font:400 12.5px/1.65 'Chakra Petch',sans-serif;color:rgba(240,240,236,.55)">Assumptions: the S3 broadcasts cadence, resistance, speed/distance and calories over Bluetooth FTMS. Dark-only riding UI, both free rides and structured intervals. Three directions below — each shows the live-ride screen plus one supporting screen. References: Peloton's stacked metric cards, Ultrahuman's zone ring, Runna's pairing sheet (via Mobbin).</div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a><b>COCKPIT</b> — cycling-computer density, mono numerals, hairline grid · live ride + pairing</div>
+<div style="display:flex;gap:24px;flex-wrap:wrap">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div data-screen-label="1a Live ride" style="height:100%;background:#0A0B0D;color:#EDEDEA;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:66px 20px 10px;border-bottom:1px solid #1E2024">
+    <div style="display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.08em;color:#8A8D93"><span style="width:7px;height:7px;border-radius:50%;background:#FFD23F"></span>YESOUL S3</div>
+    <div style="font-size:11px;letter-spacing:.08em;color:#8A8D93">FREE RIDE</div>
+  </div>
+  <div style="text-align:center;padding:26px 0 8px">
+    <div style="font-size:11px;letter-spacing:.2em;color:#63666C">ELAPSED</div>
+    <div style="font-size:44px;font-weight:600;letter-spacing:.02em">23:41</div>
+  </div>
+  <div style="text-align:center;padding:8px 0 20px">
+    <div style="font-size:11px;letter-spacing:.2em;color:#63666C;margin-bottom:2px">CADENCE RPM</div>
+    <div style="font-size:112px;font-weight:700;line-height:1;color:#FFD23F">86</div>
+    <div style="display:flex;gap:3px;justify-content:center;align-items:flex-end;height:28px;margin-top:16px">
+      <div style="width:10px;height:12px;background:#2A2D33"></div><div style="width:10px;height:16px;background:#2A2D33"></div><div style="width:10px;height:14px;background:#2A2D33"></div><div style="width:10px;height:20px;background:#3A3E45"></div><div style="width:10px;height:24px;background:#3A3E45"></div><div style="width:10px;height:22px;background:#3A3E45"></div><div style="width:10px;height:26px;background:#FFD23F"></div><div style="width:10px;height:28px;background:#FFD23F"></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1E2024;flex:1">
+    <div style="padding:18px 20px;border-right:1px solid #1E2024;border-bottom:1px solid #1E2024"><div style="font-size:10px;letter-spacing:.2em;color:#63666C">RESISTANCE</div><div style="font-size:32px;font-weight:600;margin-top:4px">12<span style="font-size:14px;color:#63666C">/32</span></div></div>
+    <div style="padding:18px 20px;border-bottom:1px solid #1E2024"><div style="font-size:10px;letter-spacing:.2em;color:#63666C">SPEED</div><div style="font-size:32px;font-weight:600;margin-top:4px">28.4<span style="font-size:14px;color:#63666C"> KM/H</span></div></div>
+    <div style="padding:18px 20px;border-right:1px solid #1E2024"><div style="font-size:10px;letter-spacing:.2em;color:#63666C">DISTANCE</div><div style="font-size:32px;font-weight:600;margin-top:4px">11.2<span style="font-size:14px;color:#63666C"> KM</span></div></div>
+    <div style="padding:18px 20px"><div style="font-size:10px;letter-spacing:.2em;color:#63666C">CALORIES</div><div style="font-size:32px;font-weight:600;margin-top:4px">312<span style="font-size:14px;color:#63666C"> KCAL</span></div></div>
+  </div>
+  <div style="display:flex;gap:1px;background:#1E2024;border-top:1px solid #1E2024">
+    <div style="flex:1;background:#0A0B0D;text-align:center;padding:18px 0 26px;font-size:13px;letter-spacing:.15em;color:#EDEDEA">PAUSE</div>
+    <div style="flex:1;background:#FFD23F;text-align:center;padding:18px 0 26px;font-size:13px;letter-spacing:.15em;color:#0A0B0D;font-weight:600">END RIDE</div>
+  </div>
+</div>
+</x-import>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div data-screen-label="1a Pairing" style="height:100%;background:#0A0B0D;color:#EDEDEA;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <div style="padding:70px 20px 0;font-family:'Chakra Petch',sans-serif">
+    <div style="font-size:24px;font-weight:600">Connect your bike</div>
+    <div style="font-size:12px;color:#8A8D93;margin-top:6px;font-family:'IBM Plex Mono',monospace">SCANNING FOR BLUETOOTH FTMS<span style="color:#FFD23F">_</span></div>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;padding:36px 0 28px">
+    <div style="width:150px;height:150px;border:1px solid #1E2024;border-radius:50%;display:flex;align-items:center;justify-content:center">
+      <div style="width:104px;height:104px;border:1px solid #2A2D33;border-radius:50%;display:flex;align-items:center;justify-content:center">
+        <div style="width:60px;height:60px;border:1px solid #FFD23F;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.15em;color:#FFD23F">SCAN</div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 20px;display:flex;flex-direction:column;gap:1px;background:transparent">
+    <div style="font-size:10px;letter-spacing:.2em;color:#63666C;margin-bottom:10px">2 DEVICES FOUND</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #FFD23F;padding:16px 16px">
+      <div><div style="font-size:14px;font-weight:600">YESOUL S3-4F2A</div><div style="font-size:10px;color:#8A8D93;margin-top:3px">SMART BIKE · FTMS</div></div>
+      <div style="display:flex;gap:2px;align-items:flex-end"><div style="width:4px;height:6px;background:#FFD23F"></div><div style="width:4px;height:10px;background:#FFD23F"></div><div style="width:4px;height:14px;background:#FFD23F"></div><div style="width:4px;height:18px;background:#3A3E45"></div></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #1E2024;border-top:none;padding:16px 16px">
+      <div><div style="font-size:14px;color:#8A8D93">HR-STRAP 88</div><div style="font-size:10px;color:#63666C;margin-top:3px">HEART RATE</div></div>
+      <div style="display:flex;gap:2px;align-items:flex-end"><div style="width:4px;height:6px;background:#63666C"></div><div style="width:4px;height:10px;background:#63666C"></div><div style="width:4px;height:14px;background:#3A3E45"></div><div style="width:4px;height:18px;background:#3A3E45"></div></div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="margin:0 20px 34px;background:#FFD23F;color:#0A0B0D;text-align:center;padding:17px 0;font-size:13px;letter-spacing:.15em;font-weight:600">CONNECT S3-4F2A</div>
+</div>
+</x-import>
+</div>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><b>PULSE</b> — motivational, giant condensed numerals, orange color-blocking · live intervals + home</div>
+<div style="display:flex;gap:24px;flex-wrap:wrap">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div data-screen-label="1b Live intervals" style="height:100%;background:#121014;color:#F4F1EC;font-family:'Barlow Condensed',sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;padding:66px 22px 0">
+    <div style="font-size:15px;font-weight:600;letter-spacing:.05em;color:#9B959D">HIIT 30 · INTERVAL 6/12</div>
+    <div style="font-size:15px;font-weight:600;color:#9B959D">14:22 LEFT</div>
+  </div>
+  <div style="display:flex;gap:4px;padding:12px 22px 0">
+    <div style="flex:1;height:6px;background:#FF5C1F"></div><div style="flex:1;height:6px;background:#FF5C1F"></div><div style="flex:1;height:6px;background:#FF5C1F"></div><div style="flex:1;height:6px;background:#FF5C1F"></div><div style="flex:1;height:6px;background:#FF5C1F"></div><div style="flex:2;height:6px;background:#F4F1EC"></div><div style="flex:1;height:6px;background:#332E36"></div><div style="flex:1;height:6px;background:#332E36"></div><div style="flex:2;height:6px;background:#332E36"></div><div style="flex:1;height:6px;background:#332E36"></div><div style="flex:1;height:6px;background:#332E36"></div><div style="flex:2;height:6px;background:#332E36"></div>
+  </div>
+  <div style="background:#FF5C1F;color:#121014;margin:20px 22px 0;padding:10px 16px;display:flex;justify-content:space-between;align-items:baseline">
+    <div style="font-size:20px;font-weight:800;letter-spacing:.06em">PUSH — SPRINT</div>
+    <div style="font-size:20px;font-weight:800">0:38</div>
+  </div>
+  <div style="text-align:center;margin-top:10px">
+    <div style="font-size:230px;font-weight:800;line-height:.95;letter-spacing:-.01em">94</div>
+    <div style="font-size:18px;font-weight:600;letter-spacing:.3em;color:#9B959D;margin-top:-6px">RPM · TARGET 90–100</div>
+  </div>
+  <div style="display:flex;justify-content:center;gap:10px;margin-top:14px">
+    <div style="border:2px solid #FF5C1F;color:#FF5C1F;font-size:17px;font-weight:700;letter-spacing:.1em;padding:6px 16px">RESISTANCE 16 ▲2</div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="display:flex;justify-content:space-around;padding:0 22px 16px">
+    <div style="text-align:center"><div style="font-size:38px;font-weight:700">29.1</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">KM/H</div></div>
+    <div style="text-align:center"><div style="font-size:38px;font-weight:700">8.4</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">KM</div></div>
+    <div style="text-align:center"><div style="font-size:38px;font-weight:700">287</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">KCAL</div></div>
+    <div style="text-align:center"><div style="font-size:38px;font-weight:700">18:03</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">TIME</div></div>
+  </div>
+  <div style="display:flex;gap:12px;padding:0 22px 30px">
+    <div style="flex:1;border:2px solid #332E36;text-align:center;padding:14px 0;font-size:16px;font-weight:700;letter-spacing:.15em">PAUSE</div>
+    <div style="flex:1;background:#F4F1EC;color:#121014;text-align:center;padding:14px 0;font-size:16px;font-weight:700;letter-spacing:.15em">END</div>
+  </div>
+</div>
+</x-import>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div data-screen-label="1b Home" style="height:100%;background:#121014;color:#F4F1EC;font-family:'Barlow Condensed',sans-serif;display:flex;flex-direction:column">
+  <div style="padding:68px 22px 0;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:34px;font-weight:800;letter-spacing:.02em">EVENING, SAM</div>
+    <div style="width:38px;height:38px;border-radius:50%;background:#332E36;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">S</div>
+  </div>
+  <div style="padding:4px 22px 0;font-size:15px;font-weight:600;letter-spacing:.08em;color:#FF5C1F">● S3 CONNECTED · READY TO RIDE</div>
+  <div style="margin:20px 22px 0;background:#FF5C1F;color:#121014;padding:26px 22px;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-size:44px;font-weight:800;line-height:1">START RIDE</div><div style="font-size:15px;font-weight:600;letter-spacing:.1em;margin-top:4px">FREE RIDE · JUST PEDAL</div></div>
+    <div style="font-size:44px;font-weight:800">→</div>
+  </div>
+  <div style="display:flex;gap:12px;margin:12px 22px 0">
+    <div style="flex:1;border:2px solid #332E36;padding:16px 16px"><div style="font-size:22px;font-weight:700;line-height:1">HIIT 30</div><div style="font-size:13px;letter-spacing:.1em;color:#9B959D;margin-top:4px">12 INTERVALS · HARD</div></div>
+    <div style="flex:1;border:2px solid #332E36;padding:16px 16px"><div style="font-size:22px;font-weight:700;line-height:1">ENDURANCE 45</div><div style="font-size:13px;letter-spacing:.1em;color:#9B959D;margin-top:4px">STEADY ZONE 2</div></div>
+  </div>
+  <div style="padding:28px 22px 10px;font-size:15px;font-weight:600;letter-spacing:.2em;color:#9B959D">THIS WEEK</div>
+  <div style="display:flex;gap:8px;padding:0 22px;align-items:flex-end;height:86px">
+    <div style="flex:1;background:#FF5C1F;height:55%"></div>
+    <div style="flex:1;background:#FF5C1F;height:80%"></div>
+    <div style="flex:1;background:#332E36;height:8%"></div>
+    <div style="flex:1;background:#FF5C1F;height:65%"></div>
+    <div style="flex:1;background:#FF5C1F;height:100%"></div>
+    <div style="flex:1;background:#332E36;height:8%"></div>
+    <div style="flex:1;border:2px dashed #332E36;height:40%;box-sizing:border-box"></div>
+  </div>
+  <div style="display:flex;gap:8px;padding:6px 22px 0;font-size:12px;letter-spacing:.1em;color:#9B959D">
+    <div style="flex:1;text-align:center">MO</div><div style="flex:1;text-align:center">TU</div><div style="flex:1;text-align:center">WE</div><div style="flex:1;text-align:center">TH</div><div style="flex:1;text-align:center">FR</div><div style="flex:1;text-align:center">SA</div><div style="flex:1;text-align:center;color:#FF5C1F">TODAY</div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="margin:0 22px 30px;border-top:2px solid #332E36;padding-top:16px;display:flex;justify-content:space-between;align-items:baseline">
+    <div style="font-size:15px;letter-spacing:.1em;color:#9B959D">LAST RIDE · YESTERDAY</div>
+    <div style="font-size:22px;font-weight:700">14.8 KM · 41 MIN · 402 KCAL</div>
+  </div>
+</div>
+</x-import>
+</div>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><b>ZONES</b> — cadence ring as the hero, lime on graphite · live ride + history</div>
+<div style="display:flex;gap:24px;flex-wrap:wrap">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div data-screen-label="1c Live ride" style="height:100%;background:#141613;color:#EFF2EA;font-family:'Chakra Petch',sans-serif;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;padding:66px 24px 0;font-size:12px;letter-spacing:.12em;color:#8B9184">
+    <div><span style="color:#D4FF3F">●</span> S3 CONNECTED</div>
+    <div>32:10</div>
+  </div>
+  <div style="display:flex;justify-content:center;padding:30px 0 6px">
+    <div style="width:280px;height:280px;border-radius:50%;background:conic-gradient(from 220deg, #2A2E27 0deg, #2A2E27 20deg, #4A5240 20deg, #D4FF3F 195deg, #22251F 195deg, #22251F 280deg, #2A2E27 280deg);display:flex;align-items:center;justify-content:center">
+      <div style="width:224px;height:224px;border-radius:50%;background:#141613;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="font-size:13px;letter-spacing:.25em;color:#8B9184">CADENCE</div>
+        <div style="font-size:88px;font-weight:700;line-height:1;color:#D4FF3F">88</div>
+        <div style="font-size:13px;letter-spacing:.15em;color:#8B9184;margin-top:2px">RPM · ZONE 3</div>
+        <div style="margin-top:10px;font-size:12px;letter-spacing:.1em;background:#22251F;padding:5px 12px;border-radius:999px;color:#EFF2EA">TEMPO — HOLD IT</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;gap:8px;padding:14px 0 4px;font-size:11px;letter-spacing:.12em">
+    <div style="padding:5px 12px;border-radius:999px;background:#22251F;color:#8B9184">Z1 EASY</div>
+    <div style="padding:5px 12px;border-radius:999px;background:#22251F;color:#8B9184">Z2 STEADY</div>
+    <div style="padding:5px 12px;border-radius:999px;background:#D4FF3F;color:#141613;font-weight:600">Z3 TEMPO</div>
+    <div style="padding:5px 12px;border-radius:999px;background:#22251F;color:#8B9184">Z4 MAX</div>
+  </div>
+  <div style="display:flex;gap:10px;padding:22px 24px 0">
+    <div style="flex:1;background:#1B1E19;border-radius:16px;padding:14px 14px"><div style="font-size:10px;letter-spacing:.18em;color:#8B9184">RESIST</div><div style="font-size:26px;font-weight:600;margin-top:4px">14</div></div>
+    <div style="flex:1;background:#1B1E19;border-radius:16px;padding:14px 14px"><div style="font-size:10px;letter-spacing:.18em;color:#8B9184">KM/H</div><div style="font-size:26px;font-weight:600;margin-top:4px">27.6</div></div>
+    <div style="flex:1;background:#1B1E19;border-radius:16px;padding:14px 14px"><div style="font-size:10px;letter-spacing:.18em;color:#8B9184">KM</div><div style="font-size:26px;font-weight:600;margin-top:4px">13.9</div></div>
+    <div style="flex:1;background:#1B1E19;border-radius:16px;padding:14px 14px"><div style="font-size:10px;letter-spacing:.18em;color:#8B9184">KCAL</div><div style="font-size:26px;font-weight:600;margin-top:4px">358</div></div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="display:flex;gap:12px;padding:0 24px 32px">
+    <div style="width:64px;border:1px solid #2A2E27;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:18px">⏸</div>
+    <div style="flex:1;background:#D4FF3F;color:#141613;border-radius:999px;text-align:center;padding:16px 0;font-size:14px;letter-spacing:.15em;font-weight:600">FINISH RIDE</div>
+  </div>
+</div>
+</x-import>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div data-screen-label="1c History" style="height:100%;background:#141613;color:#EFF2EA;font-family:'Chakra Petch',sans-serif;display:flex;flex-direction:column">
+  <div style="padding:68px 24px 0">
+    <div style="font-size:26px;font-weight:600">Your rides</div>
+    <div style="font-size:12px;letter-spacing:.1em;color:#8B9184;margin-top:4px">AUGUST 2026</div>
+  </div>
+  <div style="display:flex;gap:10px;padding:18px 24px 0">
+    <div style="flex:1;background:#D4FF3F;color:#141613;border-radius:16px;padding:16px 16px"><div style="font-size:10px;letter-spacing:.18em;font-weight:600">DISTANCE</div><div style="font-size:30px;font-weight:700;margin-top:4px">186 km</div></div>
+    <div style="flex:1;background:#1B1E19;border-radius:16px;padding:16px 16px"><div style="font-size:10px;letter-spacing:.18em;color:#8B9184">RIDES</div><div style="font-size:30px;font-weight:700;margin-top:4px">17</div></div>
+    <div style="flex:1;background:#1B1E19;border-radius:16px;padding:16px 16px"><div style="font-size:10px;letter-spacing:.18em;color:#8B9184">HOURS</div><div style="font-size:30px;font-weight:700;margin-top:4px">9.4</div></div>
+  </div>
+  <div style="padding:26px 24px 10px;font-size:11px;letter-spacing:.2em;color:#8B9184">RECENT</div>
+  <div style="display:flex;flex-direction:column;gap:10px;padding:0 24px">
+    <div style="background:#1B1E19;border-radius:16px;padding:16px 16px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:15px;font-weight:600">HIIT 30</div><div style="font-size:11px;letter-spacing:.08em;color:#8B9184;margin-top:3px">THU · 30 MIN · 11.2 KM · 341 KCAL</div></div>
+      <div style="display:flex;gap:3px;align-items:flex-end;height:34px"><div style="width:6px;height:40%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:90%;background:#D4FF3F;border-radius:2px"></div><div style="width:6px;height:35%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:95%;background:#D4FF3F;border-radius:2px"></div><div style="width:6px;height:45%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:100%;background:#D4FF3F;border-radius:2px"></div></div>
+    </div>
+    <div style="background:#1B1E19;border-radius:16px;padding:16px 16px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:15px;font-weight:600">Free ride</div><div style="font-size:11px;letter-spacing:.08em;color:#8B9184;margin-top:3px">WED · 41 MIN · 14.8 KM · 402 KCAL</div></div>
+      <div style="display:flex;gap:3px;align-items:flex-end;height:34px"><div style="width:6px;height:55%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:65%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:70%;background:#D4FF3F;border-radius:2px"></div><div style="width:6px;height:60%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:75%;background:#D4FF3F;border-radius:2px"></div><div style="width:6px;height:58%;background:#4A5240;border-radius:2px"></div></div>
+    </div>
+    <div style="background:#1B1E19;border-radius:16px;padding:16px 16px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:15px;font-weight:600">Endurance 45</div><div style="font-size:11px;letter-spacing:.08em;color:#8B9184;margin-top:3px">MON · 45 MIN · 16.1 KM · 458 KCAL</div></div>
+      <div style="display:flex;gap:3px;align-items:flex-end;height:34px"><div style="width:6px;height:60%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:62%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:64%;background:#D4FF3F;border-radius:2px"></div><div style="width:6px;height:63%;background:#4A5240;border-radius:2px"></div><div style="width:6px;height:65%;background:#D4FF3F;border-radius:2px"></div><div style="width:6px;height:64%;background:#4A5240;border-radius:2px"></div></div>
+    </div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="display:flex;justify-content:space-around;border-top:1px solid #22251F;padding:14px 0 30px;font-size:11px;letter-spacing:.15em;color:#8B9184">
+    <div>HOME</div><div style="color:#D4FF3F">RIDES</div><div>PROGRAMS</div><div>PROFILE</div>
+  </div>
+</div>
+</x-import>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: "build <a class="dv-oid" href="#1a">1a</a> as a working prototype" · "the ring from <a class="dv-oid" href="#1c">1c</a> with the orange energy of <a class="dv-oid" href="#1b">1b</a>" · "show the programs + profile screens for my favorite"</p>
+</section>
+</x-dc>
+</body>
+</html>

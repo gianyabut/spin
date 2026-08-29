@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>html{background:#0c0b0d}body{margin:0;background:#0c0b0d;font-family:'Barlow Condensed',sans-serif;display:flex;justify-content:center;padding:28px 0}a{color:#FF5C1F}a:hover{color:#F4F1EC}</style>
+</helmet>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="393px,852px">
+<div style="height:100%;background:#121014;color:#F4F1EC;font-family:'Barlow Condensed',sans-serif;display:flex;flex-direction:column;overflow:hidden">
+
+<sc-if value="{{ isConnect }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Connect" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:68px 22px 30px;box-sizing:border-box">
+  <div style="font-size:44px;font-weight:800;line-height:1;letter-spacing:.01em">CONNECT<br>YOUR BIKE</div>
+  <div style="font-size:15px;font-weight:600;letter-spacing:.12em;color:#9B959D;margin-top:8px">SCANNING FOR BLUETOOTH FTMS<span style="color:#FF5C1F">_</span></div>
+  <div style="display:flex;justify-content:center;padding:40px 0 34px">
+    <div style="width:140px;height:140px;border:2px solid #332E36;border-radius:50%;display:flex;align-items:center;justify-content:center">
+      <div style="width:96px;height:96px;border:2px solid #332E36;border-radius:50%;display:flex;align-items:center;justify-content:center">
+        <div style="width:54px;height:54px;background:#FF5C1F;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:.1em;color:#121014">SCAN</div>
+      </div>
+    </div>
+  </div>
+  <sc-if value="{{ devicesFound }}" hint-placeholder-val="{{ false }}">
+    <div style="font-size:13px;font-weight:600;letter-spacing:.2em;color:#9B959D;margin-bottom:10px">1 DEVICE FOUND</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;border:2px solid #FF5C1F;padding:16px 16px">
+      <div><div style="font-size:20px;font-weight:700">YESOUL S3-4F2A</div><div style="font-size:13px;letter-spacing:.1em;color:#9B959D;margin-top:2px">SMART BIKE · FTMS</div></div>
+      <div style="display:flex;gap:3px;align-items:flex-end"><div style="width:5px;height:8px;background:#FF5C1F"></div><div style="width:5px;height:13px;background:#FF5C1F"></div><div style="width:5px;height:18px;background:#FF5C1F"></div><div style="width:5px;height:23px;background:#332E36"></div></div>
+    </div>
+    <div style="flex:1"></div>
+    <div onClick="{{ onConnect }}" style="background:#FF5C1F;color:#121014;text-align:center;padding:16px 0;font-size:18px;font-weight:800;letter-spacing:.15em;cursor:pointer" style-active="transform:scale(.98)">CONNECT</div>
+  </sc-if>
+  <sc-if value="{{ stillScanning }}" hint-placeholder-val="{{ true }}">
+    <div style="font-size:13px;font-weight:600;letter-spacing:.2em;color:#332E36;text-align:center">MAKE SURE THE BIKE CONSOLE IS AWAKE</div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Home" style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;padding:64px 22px 12px;box-sizing:border-box">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:34px;font-weight:800;letter-spacing:.02em">{{ greeting }}</div>
+    <div onClick="{{ goProfile }}" style="width:38px;height:38px;border-radius:50%;background:#332E36;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;cursor:pointer">S</div>
+  </div>
+  <div style="font-size:15px;font-weight:600;letter-spacing:.08em;color:#FF5C1F;margin-top:2px">● S3 CONNECTED · READY TO RIDE</div>
+  <div onClick="{{ startFree }}" style="margin-top:18px;background:#FF5C1F;color:#121014;padding:24px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" style-hover="background:#ff6e38">
+    <div><div style="font-size:42px;font-weight:800;line-height:1">START RIDE</div><div style="font-size:15px;font-weight:600;letter-spacing:.1em;margin-top:4px">FREE RIDE · JUST PEDAL</div></div>
+    <div style="font-size:42px;font-weight:800">→</div>
+  </div>
+  <div style="display:flex;gap:12px;margin-top:12px">
+    <sc-for list="{{ homePrograms }}" as="p" hint-placeholder-count="2">
+      <div onClick="{{ p.start }}" style="flex:1;border:2px solid #332E36;padding:14px 14px;cursor:pointer" style-hover="border-color:#FF5C1F">
+        <div style="font-size:22px;font-weight:700;line-height:1">{{ p.name }}</div>
+        <div style="font-size:13px;letter-spacing:.1em;color:#9B959D;margin-top:4px">{{ p.desc }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="font-size:15px;font-weight:600;letter-spacing:.2em;color:#9B959D;padding:24px 0 10px">THIS WEEK</div>
+  <div style="display:flex;gap:8px;align-items:flex-end;height:80px">
+    <div style="flex:1;background:#FF5C1F;height:55%"></div>
+    <div style="flex:1;background:#FF5C1F;height:80%"></div>
+    <div style="flex:1;background:#332E36;height:8%"></div>
+    <div style="flex:1;background:#FF5C1F;height:65%"></div>
+    <div style="flex:1;background:#FF5C1F;height:100%"></div>
+    <div style="flex:1;background:#332E36;height:8%"></div>
+    <div style="flex:1;border:2px dashed #332E36;height:40%;box-sizing:border-box"></div>
+  </div>
+  <div style="display:flex;gap:8px;padding-top:6px;font-size:12px;letter-spacing:.1em;color:#9B959D">
+    <div style="flex:1;text-align:center">MO</div><div style="flex:1;text-align:center">TU</div><div style="flex:1;text-align:center">WE</div><div style="flex:1;text-align:center">TH</div><div style="flex:1;text-align:center">FR</div><div style="flex:1;text-align:center">SA</div><div style="flex:1;text-align:center;color:#FF5C1F">TODAY</div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="border-top:2px solid #332E36;margin-top:16px;padding-top:14px;display:flex;justify-content:space-between;align-items:baseline">
+    <div style="font-size:15px;letter-spacing:.1em;color:#9B959D">LAST RIDE</div>
+    <div style="font-size:20px;font-weight:700">{{ lastRideMeta }}</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRide }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Live ride" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:64px 0 30px;box-sizing:border-box">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 22px">
+    <div style="font-size:15px;font-weight:600;letter-spacing:.05em;color:#9B959D">{{ rideMode }}</div>
+    <div style="font-size:15px;font-weight:600;color:#9B959D">{{ rideClock }}</div>
+  </div>
+  <sc-if value="{{ hasProgram }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:4px;padding:12px 22px 0">
+      <sc-for list="{{ intervalSegs }}" as="seg" hint-placeholder-count="12">
+        <div style="flex:{{ seg.flex }};height:6px;background:{{ seg.bg }}"></div>
+      </sc-for>
+    </div>
+    <div style="background:{{ bannerBg }};color:{{ bannerFg }};margin:18px 22px 0;padding:10px 16px;display:flex;justify-content:space-between;align-items:baseline">
+      <div style="font-size:20px;font-weight:800;letter-spacing:.06em">{{ bannerLabel }}</div>
+      <div style="font-size:20px;font-weight:800">{{ bannerClock }}</div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isPaused }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:14px 22px 0;border:2px solid #F4F1EC;text-align:center;padding:8px 0;font-size:16px;font-weight:800;letter-spacing:.3em">PAUSED</div>
+  </sc-if>
+  <div style="text-align:center;margin-top:6px">
+    <div style="font-size:200px;font-weight:800;line-height:.95;letter-spacing:-.01em">{{ cadence }}</div>
+    <div style="font-size:17px;font-weight:600;letter-spacing:.3em;color:#9B959D;margin-top:-4px">{{ targetLabel }}</div>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:stretch;gap:0;margin-top:16px">
+    <div onClick="{{ resDown }}" style="border:2px solid #332E36;border-right:none;color:#F4F1EC;font-size:20px;font-weight:800;padding:6px 18px;cursor:pointer" style-active="background:#332E36">−</div>
+    <div style="border:2px solid #FF5C1F;color:#FF5C1F;font-size:17px;font-weight:700;letter-spacing:.1em;padding:6px 16px;display:flex;align-items:center">{{ resistanceLabel }}{{ resCue }}</div>
+    <div onClick="{{ resUp }}" style="border:2px solid #332E36;border-left:none;color:#F4F1EC;font-size:20px;font-weight:800;padding:6px 18px;cursor:pointer" style-active="background:#332E36">+</div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="display:flex;justify-content:space-around;padding:0 22px 16px">
+    <div style="text-align:center;min-width:70px"><div style="font-size:36px;font-weight:700">{{ speedFmt }}</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">{{ speedLabel }}</div></div>
+    <div style="text-align:center;min-width:70px"><div style="font-size:36px;font-weight:700">{{ distFmt }}</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">{{ distLabel }}</div></div>
+    <div style="text-align:center;min-width:70px"><div style="font-size:36px;font-weight:700">{{ calFmt }}</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">KCAL</div></div>
+    <div style="text-align:center;min-width:70px"><div style="font-size:36px;font-weight:700">{{ elapsedFmt }}</div><div style="font-size:13px;letter-spacing:.2em;color:#9B959D">TIME</div></div>
+  </div>
+  <div style="display:flex;gap:12px;padding:0 22px">
+    <div onClick="{{ togglePause }}" style="flex:1;border:2px solid #332E36;text-align:center;padding:14px 0;font-size:16px;font-weight:700;letter-spacing:.15em;cursor:pointer" style-hover="border-color:#F4F1EC">{{ pauseLabel }}</div>
+    <div onClick="{{ endRide }}" style="flex:1;background:#F4F1EC;color:#121014;text-align:center;padding:14px 0;font-size:16px;font-weight:700;letter-spacing:.15em;cursor:pointer" style-hover="background:#fff">END</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSummary }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Ride summary" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:68px 22px 30px;box-sizing:border-box">
+  <div style="font-size:58px;font-weight:800;line-height:.95">RIDE<br>COMPLETE</div>
+  <div style="font-size:15px;font-weight:600;letter-spacing:.12em;color:#9B959D;margin-top:8px">{{ summaryName }}</div>
+  <sc-if value="{{ summaryPB }}" hint-placeholder-val="{{ false }}">
+    <div style="align-self:flex-start;background:#F4F1EC;color:#121014;font-size:15px;font-weight:800;letter-spacing:.15em;padding:5px 12px;margin-top:14px">★ NEW DISTANCE PB</div>
+  </sc-if>
+  <div style="background:#FF5C1F;color:#121014;margin-top:20px;padding:22px 20px">
+    <div style="font-size:15px;font-weight:700;letter-spacing:.2em">DISTANCE</div>
+    <div style="font-size:76px;font-weight:800;line-height:1">{{ summaryDist }}<span style="font-size:28px;font-weight:700"> {{ distLabel }}</span></div>
+  </div>
+  <div style="display:flex;border:2px solid #332E36;border-top:none;margin-top:0">
+    <div style="flex:1;padding:16px 0;text-align:center;border-right:2px solid #332E36"><div style="font-size:32px;font-weight:700">{{ summaryTime }}</div><div style="font-size:12px;letter-spacing:.2em;color:#9B959D">TIME</div></div>
+    <div style="flex:1;padding:16px 0;text-align:center;border-right:2px solid #332E36"><div style="font-size:32px;font-weight:700">{{ summaryCal }}</div><div style="font-size:12px;letter-spacing:.2em;color:#9B959D">KCAL</div></div>
+    <div style="flex:1;padding:16px 0;text-align:center"><div style="font-size:32px;font-weight:700">{{ summaryAvg }}</div><div style="font-size:12px;letter-spacing:.2em;color:#9B959D">AVG RPM</div></div>
+  </div>
+  <div style="flex:1"></div>
+  <div onClick="{{ doneSummary }}" style="background:#F4F1EC;color:#121014;text-align:center;padding:16px 0;font-size:18px;font-weight:800;letter-spacing:.15em;cursor:pointer">DONE</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRides }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Ride history" style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;padding:64px 22px 12px;box-sizing:border-box">
+  <div style="font-size:34px;font-weight:800">YOUR RIDES</div>
+  <div style="font-size:14px;font-weight:600;letter-spacing:.15em;color:#9B959D;margin-top:2px">AUGUST 2026</div>
+  <div style="display:flex;gap:12px;margin-top:16px">
+    <div style="flex:1;background:#FF5C1F;color:#121014;padding:14px 14px"><div style="font-size:12px;font-weight:700;letter-spacing:.15em">DISTANCE</div><div style="font-size:30px;font-weight:800;line-height:1;margin-top:4px">{{ monthKm }}</div></div>
+    <div style="flex:1;border:2px solid #332E36;padding:12px 14px"><div style="font-size:12px;font-weight:700;letter-spacing:.15em;color:#9B959D">RIDES</div><div style="font-size:30px;font-weight:800;line-height:1;margin-top:4px">{{ monthRides }}</div></div>
+    <div style="flex:1;border:2px solid #332E36;padding:12px 14px"><div style="font-size:12px;font-weight:700;letter-spacing:.15em;color:#9B959D">HOURS</div><div style="font-size:30px;font-weight:800;line-height:1;margin-top:4px">{{ monthHours }}</div></div>
+  </div>
+  <div style="font-size:14px;font-weight:600;letter-spacing:.2em;color:#9B959D;padding:22px 0 6px">RECENT</div>
+  <div style="display:flex;flex-direction:column">
+    <sc-for list="{{ historyRows }}" as="h" hint-placeholder-count="4">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #241f27;padding:14px 0">
+        <div><div style="font-size:20px;font-weight:700">{{ h.name }}</div><div style="font-size:13px;letter-spacing:.08em;color:#9B959D;margin-top:2px">{{ h.meta }}</div></div>
+        <div style="font-size:26px;font-weight:800;color:#FF5C1F">{{ h.km }}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPrograms }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Programs" style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;padding:64px 22px 12px;box-sizing:border-box">
+  <div style="font-size:34px;font-weight:800">PROGRAMS</div>
+  <div style="font-size:14px;font-weight:600;letter-spacing:.15em;color:#9B959D;margin-top:2px">STRUCTURED INTERVALS FOR THE S3</div>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+    <sc-for list="{{ programList }}" as="p" hint-placeholder-count="3">
+      <div style="border:2px solid #332E36;padding:16px 16px" style-hover="border-color:#FF5C1F">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <div style="font-size:26px;font-weight:800;line-height:1">{{ p.name }}</div>
+          <div style="font-size:15px;font-weight:700;color:#9B959D">{{ p.meta }}</div>
+        </div>
+        <div style="font-size:14px;letter-spacing:.1em;color:#9B959D;margin-top:4px">{{ p.desc }}</div>
+        <div style="display:flex;gap:3px;margin-top:12px;height:22px;align-items:flex-end">
+          <sc-for list="{{ p.bars }}" as="b" hint-placeholder-count="8">
+            <div style="flex:{{ b.flex }};height:{{ b.h }};background:#332E36"></div>
+          </sc-for>
+        </div>
+        <div onClick="{{ p.start }}" style="margin-top:14px;background:#FF5C1F;color:#121014;text-align:center;padding:10px 0;font-size:15px;font-weight:800;letter-spacing:.15em;cursor:pointer">START</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Profile" style="flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;padding:64px 22px 12px;box-sizing:border-box">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="width:54px;height:54px;border-radius:50%;background:#332E36;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800">S</div>
+    <div><div style="font-size:30px;font-weight:800;line-height:1">SAM</div><div style="font-size:13px;font-weight:600;letter-spacing:.15em;color:#9B959D;margin-top:2px">RIDING SINCE MAY 2026</div></div>
+  </div>
+  <div style="font-size:14px;font-weight:600;letter-spacing:.2em;color:#9B959D;padding:26px 0 8px">WEEKLY GOAL</div>
+  <div style="border:2px solid #332E36;padding:16px 16px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <div style="font-size:34px;font-weight:800;line-height:1">{{ weekKm }} <span style="font-size:16px;color:#9B959D">/ {{ weekGoal }} {{ distLabel }}</span></div>
+      <div style="font-size:16px;font-weight:700;color:#FF5C1F">{{ weekPct }}%</div>
+    </div>
+    <div style="height:10px;background:#332E36;margin-top:12px"><div style="height:10px;background:#FF5C1F;width:{{ weekPctW }}"></div></div>
+  </div>
+  <div style="font-size:14px;font-weight:600;letter-spacing:.2em;color:#9B959D;padding:24px 0 4px">SETTINGS</div>
+  <div style="display:flex;justify-content:space-between;border-bottom:2px solid #241f27;padding:14px 0"><div style="font-size:18px;font-weight:700">BIKE</div><div style="font-size:16px;font-weight:600;color:#FF5C1F">YESOUL S3-4F2A · CONNECTED</div></div>
+  <div style="display:flex;justify-content:space-between;border-bottom:2px solid #241f27;padding:14px 0"><div style="font-size:18px;font-weight:700">UNITS</div><div style="font-size:16px;font-weight:600;color:#9B959D">{{ unitsLabel }}</div></div>
+  <div style="display:flex;justify-content:space-between;border-bottom:2px solid #241f27;padding:14px 0"><div style="font-size:18px;font-weight:700">EXPORT TO STRAVA</div><div style="font-size:16px;font-weight:600;color:#9B959D">COMING SOON</div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;border-top:2px solid #241f27;padding:12px 0 26px;background:#121014">
+  <div onClick="{{ goHome }}" style="flex:1;text-align:center;font-size:14px;font-weight:700;letter-spacing:.15em;color:{{ tabHomeC }};cursor:pointer">HOME</div>
+  <div onClick="{{ goRides }}" style="flex:1;text-align:center;font-size:14px;font-weight:700;letter-spacing:.15em;color:{{ tabRidesC }};cursor:pointer">RIDES</div>
+  <div onClick="{{ goPrograms }}" style="flex:1;text-align:center;font-size:14px;font-weight:700;letter-spacing:.15em;color:{{ tabProgC }};cursor:pointer">PROGRAMS</div>
+  <div onClick="{{ goProfile }}" style="flex:1;text-align:center;font-size:14px;font-weight:700;letter-spacing:.15em;color:{{ tabProfC }};cursor:pointer">PROFILE</div>
+</div>
+</sc-if>
+
+</div>
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:960},&quot;units&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;km&quot;,&quot;mi&quot;],&quot;default&quot;:&quot;km&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Settings&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;connect&quot;,&quot;home&quot;],&quot;default&quot;:&quot;connect&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const hiit = [{label:'WARM UP',dur:300,lo:70,hi:80,res:8}];
+    for (let i=0;i<8;i++){ hiit.push({label:'PUSH — SPRINT',dur:60,lo:90,hi:100,res:16}); hiit.push({label:'RECOVER',dur:90,lo:70,hi:80,res:10}); }
+    hiit.push({label:'COOL DOWN',dur:300,lo:60,hi:70,res:6});
+    this.PROGRAMS = [
+      {name:'HIIT 30', desc:'8 SPRINTS · HARD', segs:hiit},
+      {name:'ENDURANCE 45', desc:'STEADY ZONE 2', segs:[{label:'WARM UP',dur:180,lo:65,hi:75,res:8},{label:'STEADY — ZONE 2',dur:2340,lo:75,hi:85,res:12},{label:'COOL DOWN',dur:180,lo:60,hi:70,res:6}]},
+      {name:'PYRAMID 20', desc:'CLIMB UP, SPIN DOWN', segs:[{label:'WARM UP',dur:120,lo:70,hi:80,res:8},{label:'CLIMB 1',dur:180,lo:80,hi:90,res:12},{label:'CLIMB 2',dur:180,lo:85,hi:95,res:16},{label:'PEAK',dur:120,lo:90,hi:100,res:20},{label:'DESCEND',dur:180,lo:80,hi:90,res:14},{label:'SPIN OUT',dur:180,lo:75,hi:85,res:10},{label:'COOL DOWN',dur:120,lo:60,hi:70,res:6}]}
+    ];
+    this.state = {
+      screen: this.props.startScreen ?? 'connect', devicesFound: false,
+      riding:false, paused:false, program:null,
+      elapsed:0, cadence:0, resistance:8, distance:0, calories:0, speed:0,
+      segIdx:0, segElapsed:0, rpmSum:0, rpmN:0, summary:null,
+      history: [
+        {name:'HIIT 30', when:'THU', min:30, km:11.2, kcal:341},
+        {name:'Free ride', when:'WED', min:41, km:14.8, kcal:402},
+        {name:'Endurance 45', when:'MON', min:45, km:16.1, kcal:458}
+      ]
+    };
+  }
+  componentDidMount() {
+    this.scanT = setTimeout(() => this.setState({devicesFound:true}), 1600);
+    this.tickT = setInterval(() => this.tick(), 1000);
+  }
+  componentWillUnmount() { clearTimeout(this.scanT); clearInterval(this.tickT); }
+  tick() {
+    const s = this.state;
+    if (!s.riding || s.paused) return;
+    let seg = null, segIdx = s.segIdx, segElapsed = s.segElapsed + 1, resistance = s.resistance;
+    if (s.program) {
+      seg = s.program.segs[segIdx];
+      if (segElapsed >= seg.dur) {
+        segIdx++; segElapsed = 0;
+        if (segIdx >= s.program.segs.length) { this.finishRide(); return; }
+        seg = s.program.segs[segIdx];
+        resistance = seg.res;
+      }
+    }
+    const target = seg ? (seg.lo + seg.hi) / 2 : 85;
+    let cad = s.cadence + (target - s.cadence) * 0.3 + (Math.random() * 8 - 4);
+    cad = Math.max(50, Math.min(115, cad));
+    const speed = cad * (0.26 + resistance * 0.004);
+    this.setState({
+      elapsed: s.elapsed + 1, segIdx, segElapsed, resistance, cadence: cad, speed,
+      distance: s.distance + speed / 3600,
+      calories: s.calories + 0.16 * (cad / 85) * (Math.max(resistance,4) / 10),
+      rpmSum: s.rpmSum + cad, rpmN: s.rpmN + 1
+    });
+  }
+  startRide(program) {
+    this.setState({
+      screen:'ride', riding:true, paused:false, program,
+      elapsed:0, segIdx:0, segElapsed:0, cadence:62, distance:0, calories:0, speed:0,
+      resistance: program ? program.segs[0].res : 8, rpmSum:0, rpmN:0
+    });
+  }
+  finishRide() {
+    const s = this.state;
+    const km = s.distance;
+    const pb = km > Math.max(...s.history.map(h => h.km));
+    this.setState({
+      riding:false, paused:false, screen:'summary',
+      summary: { name: s.program ? s.program.name : 'Free ride', sec: s.elapsed, km, kcal: Math.round(s.calories), avg: s.rpmN ? Math.round(s.rpmSum / s.rpmN) : 0, pb }
+    });
+  }
+  fmt(sec) { const m = Math.floor(sec/60), s = Math.floor(sec%60); return m + ':' + String(s).padStart(2,'0'); }
+  renderVals() {
+    const s = this.state, u = this.props.units ?? 'km', conv = u === 'mi' ? 0.621 : 1;
+    const distLabel = u.toUpperCase(), speedLabel = u === 'mi' ? 'MPH' : 'KM/H';
+    const h = new Date().getHours();
+    const greeting = (h < 12 ? 'MORNING' : h < 18 ? 'AFTERNOON' : 'EVENING') + ', SAM';
+    const seg = s.program ? s.program.segs[s.segIdx] : null;
+    const totalDur = s.program ? s.program.segs.reduce((a,g) => a + g.dur, 0) : 0;
+    const mkProg = p => ({ name: p.name, desc: p.desc, meta: Math.round(p.segs.reduce((a,g) => a + g.dur, 0) / 60) + ' MIN', start: () => this.startRide(p),
+      bars: p.segs.map(g => ({ flex: Math.max(1, Math.round(g.dur / 30)), h: Math.round(4 + (g.res / 20) * 18) + 'px' })) });
+    const last = s.history[0];
+    const isRecover = seg && (seg.label === 'RECOVER' || seg.label === 'COOL DOWN' || seg.label === 'WARM UP');
+    return {
+      isConnect: s.screen === 'connect', isHome: s.screen === 'home', isRide: s.screen === 'ride',
+      isSummary: s.screen === 'summary', isRides: s.screen === 'rides', isPrograms: s.screen === 'programs', isProfile: s.screen === 'profile',
+      showTabs: ['home','rides','programs','profile'].includes(s.screen),
+      devicesFound: s.devicesFound, stillScanning: !s.devicesFound,
+      onConnect: () => this.setState({screen:'home'}),
+      greeting,
+      startFree: () => this.startRide(null),
+      homePrograms: this.PROGRAMS.slice(0,2).map(mkProg),
+      programList: this.PROGRAMS.map(mkProg),
+      lastRideMeta: last ? `${(last.km*conv).toFixed(1)} ${distLabel} · ${last.min} MIN · ${last.kcal} KCAL` : '—',
+      rideMode: s.program ? `${s.program.name} · INTERVAL ${s.segIdx+1}/${s.program.segs.length}` : 'FREE RIDE',
+      rideClock: s.program ? this.fmt(Math.max(0, totalDur - s.elapsed)) + ' LEFT' : this.fmt(s.elapsed),
+      hasProgram: !!s.program, isPaused: s.paused,
+      intervalSegs: s.program ? s.program.segs.map((g,i) => ({ flex: Math.max(1, Math.round(g.dur/30)), bg: i < s.segIdx ? '#FF5C1F' : i === s.segIdx ? '#F4F1EC' : '#332E36' })) : [],
+      bannerBg: isRecover ? '#241f27' : '#FF5C1F', bannerFg: isRecover ? '#F4F1EC' : '#121014',
+      bannerLabel: seg ? seg.label : '', bannerClock: seg ? this.fmt(seg.dur - s.segElapsed) : '',
+      cadence: Math.round(s.cadence),
+      targetLabel: seg ? `RPM · TARGET ${seg.lo}–${seg.hi}` : 'RPM · FIND YOUR RHYTHM',
+      resistanceLabel: 'RESISTANCE\u00A0' + s.resistance,
+      resCue: seg && seg.res > s.resistance ? ` ▲${seg.res - s.resistance}` : seg && seg.res < s.resistance ? ` ▼${s.resistance - seg.res}` : '',
+      resUp: () => this.setState({resistance: Math.min(32, s.resistance + 1)}),
+      resDown: () => this.setState({resistance: Math.max(1, s.resistance - 1)}),
+      speedFmt: (s.speed*conv).toFixed(1), distFmt: (s.distance*conv).toFixed(1), calFmt: Math.round(s.calories), elapsedFmt: this.fmt(s.elapsed),
+      speedLabel, distLabel,
+      pauseLabel: s.paused ? 'RESUME' : 'PAUSE',
+      togglePause: () => this.setState({paused: !s.paused}),
+      endRide: () => this.finishRide(),
+      summaryName: s.summary ? (s.summary.name + ' · TODAY').toUpperCase() : '',
+      summaryPB: !!(s.summary && s.summary.pb),
+      summaryDist: s.summary ? (s.summary.km*conv).toFixed(2) : '',
+      summaryTime: s.summary ? this.fmt(s.summary.sec) : '', summaryCal: s.summary ? s.summary.kcal : '', summaryAvg: s.summary ? s.summary.avg : '',
+      doneSummary: () => {
+        const sm = s.summary;
+        this.setState({ screen:'home', summary:null,
+          history: [{name: sm.name, when:'TODAY', min: Math.max(1, Math.round(sm.sec/60)), km: +sm.km.toFixed(1), kcal: sm.kcal}, ...s.history] });
+      },
+      historyRows: s.history.map(r => ({ name: r.name.toUpperCase(), meta: `${r.when} · ${r.min} MIN · ${r.kcal} KCAL`, km: (r.km*conv).toFixed(1) + ' ' + distLabel })),
+      monthKm: Math.round(s.history.reduce((a,r) => a + r.km, 0) * conv + 144*conv) + ' ' + distLabel,
+      monthRides: s.history.length + 14,
+      monthHours: ((s.history.reduce((a,r) => a + r.min, 0) + 430) / 60).toFixed(1),
+      weekKm: (s.history.reduce((a,r) => a + r.km, 0) * conv).toFixed(1), weekGoal: Math.round(60*conv),
+      weekPct: Math.min(100, Math.round(s.history.reduce((a,r) => a + r.km, 0) / 60 * 100)),
+      weekPctW: Math.min(100, Math.round(s.history.reduce((a,r) => a + r.km, 0) / 60 * 100)) + '%',
+      unitsLabel: u === 'mi' ? 'MILES' : 'KILOMETERS',
+      goHome: () => this.setState({screen:'home'}), goRides: () => this.setState({screen:'rides'}),
+      goPrograms: () => this.setState({screen:'programs'}), goProfile: () => this.setState({screen:'profile'}),
+      tabHomeC: s.screen === 'home' ? '#FF5C1F' : '#9B959D', tabRidesC: s.screen === 'rides' ? '#FF5C1F' : '#9B959D',
+      tabProgC: s.screen === 'programs' ? '#FF5C1F' : '#9B959D', tabProfC: s.screen === 'profile' ? '#FF5C1F' : '#9B959D'
+    };
+  }
+}
+</script>
+</body>
+</html>
