@@ -4,11 +4,13 @@ import { SimulatedBikeSource } from '../ble/SimulatedBikeSource';
 import type { Program, Session, Summary } from '../engine/types';
 import { startSession, tick, togglePause, currentSegment, buildSummary } from '../engine/rideEngine';
 import { useHistory } from './historyStore';
+import { useSettings } from './settingsStore';
 
 type S = {
   source: BikeSource; conn: ConnState; session: Session | null; summary: Summary | null;
   _latest: BikeReading; _timer: any; _unsub: (() => void) | null;
   setSource: (src: BikeSource) => void;
+  attemptReconnect: () => Promise<void>;
   startRide: (p: Program | null) => void;
   endRide: () => void;
   setPaused: () => void;
@@ -19,6 +21,16 @@ export const useBike = create<S>((set, get) => ({
   source: new SimulatedBikeSource(), conn: 'idle', session: null, summary: null,
   _latest: { cadence: 0, ts: 0 }, _timer: null, _unsub: null,
   setSource: (src) => { set({ source: src }); src.onState(conn => set({ conn })); },
+  attemptReconnect: async () => {
+    const lastDeviceId = useSettings.getState().lastDeviceId;
+    if (!lastDeviceId) return; // nothing stored → leave conn idle so the Connect scan shows
+    try {
+      // On success the source's onState (subscribed in setSource) flips conn to 'connected'.
+      await get().source.connect(lastDeviceId);
+    } catch {
+      // Swallow: leave conn idle/error so the app falls back to the Connect scan.
+    }
+  },
   startRide: (program) => {
     const prev = get(); if (prev._timer) clearInterval(prev._timer); prev._unsub?.();
     const src = get().source;

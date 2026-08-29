@@ -4,6 +4,7 @@ import type { BikeSource, DiscoveredDevice } from '../ble/BikeSource';
 import { colors } from '../ui/tokens';
 import { T } from '../ui/text';
 import { ScreenFrame } from '../ui/components/ScreenFrame';
+import { useSettings } from '../store/settingsStore';
 
 // Port of the finalized prototype's Connect screen
 // (design/Yesoul PULSE App.dc.html lines 18–41). Values transcribed verbatim;
@@ -147,6 +148,7 @@ export function ConnectScreen({
           <Pressable
             onPress={async () => {
               await source.connect(device.id);
+              useSettings.getState().setLastDevice(device.id); // remember for next-launch auto-reconnect
               onConnected();
             }}
             style={({ pressed }) => ({

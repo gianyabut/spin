@@ -42,6 +42,9 @@ export default function App() {
       useBike.getState().setSource(
         USE_SIMULATED ? new SimulatedBikeSource() : new FtmsBikeSource(),
       );
+      // setSource must run first so the onState subscription exists; a successful
+      // reconnect flips conn to 'connected' and RootNavigator skips the Connect screen.
+      await useBike.getState().attemptReconnect();
       setHydrated(true);
     })();
   }, []);
