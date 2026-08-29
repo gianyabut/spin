@@ -27,6 +27,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
   const resInc = useBike(s => s.resInc);
   const resDec = useBike(s => s.resDec);
   const setPaused = useBike(s => s.setPaused);
+  const canControl = useBike(s => s.source.capabilities.control);
   const units = useSettings(s => s.units);
 
   if (!session) return <ScreenFrame style={{ paddingTop: 64, paddingBottom: 30 }}>{null}</ScreenFrame>;
@@ -225,6 +226,24 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
           <T style={{ color: colors.text, fontSize: 20, fontWeight: '800' }}>+</T>
         </Pressable>
       </View>
+
+      {/* Read-only note — shown only when the bike can't accept resistance writes.
+          The +/− still move the local target (▲/▼ cue), but the rider adjusts the
+          knob by hand. Muted eyebrow, matches the design's UPPERCASE label tone. */}
+      {!canControl && (
+        <T
+          style={{
+            textAlign: 'center',
+            fontSize: 13,
+            fontWeight: '600',
+            letterSpacing: 2.6,
+            color: colors.muted,
+            marginTop: 8,
+          }}
+        >
+          MANUAL RESISTANCE · ADJUST ON BIKE
+        </T>
+      )}
 
       <View style={{ flex: 1 }} />
 

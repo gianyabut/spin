@@ -17,6 +17,24 @@ type S = {
   resInc: () => void; resDec: () => void;
   clearSummary: () => void;
 };
+// Adjust the local resistance target (clamped 1..32) and, only when the source
+// reports control capability, forward the new level to the bike. On a read-only
+// source (capabilities.control === false) we still move the local target so the
+// ▲/▼ cue updates, but never write to the hardware. Bike-write is fire-and-forget;
+// a rejected Promise is swallowed so the action can't crash. (Task 6.3)
+function setResistanceLevel(get: () => S, set: (p: Partial<S>) => void, delta: 1 | -1) {
+  const st = get();
+  if (!st.session) return;
+  const next = delta > 0
+    ? Math.min(32, st.session.resistance + 1)
+    : Math.max(1, st.session.resistance - 1);
+  set({ session: { ...st.session, resistance: next } });
+  const src = get().source;
+  if (src.capabilities.control && src.setResistance) {
+    src.setResistance(next)?.catch(() => {});
+  }
+}
+
 export const useBike = create<S>((set, get) => ({
   source: new SimulatedBikeSource(), conn: 'idle', session: null, summary: null,
   _latest: { cadence: 0, ts: 0 }, _timer: null, _unsub: null,
@@ -56,7 +74,7 @@ export const useBike = create<S>((set, get) => ({
     set({ session: null, summary, _timer: null, _unsub: null });
   },
   setPaused: () => set(st => ({ session: st.session ? togglePause(st.session) : null })),
-  resInc: () => set(st => st.session ? { session: { ...st.session, resistance: Math.min(32, st.session.resistance + 1) } } : {}),
-  resDec: () => set(st => st.session ? { session: { ...st.session, resistance: Math.max(1, st.session.resistance - 1) } } : {}),
+  resInc: () => setResistanceLevel(get, set, 1),
+  resDec: () => setResistanceLevel(get, set, -1),
   clearSummary: () => set({ summary: null }),
 }));
