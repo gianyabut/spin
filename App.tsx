@@ -1,20 +1,17 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { RootNavigator } from './src/navigation/RootNavigator';
 
+/**
+ * App entry — mounts the store-state-driven RootNavigator.
+ * Full store hydration, font loading, and source selection are wired in
+ * Task 6.1; this task keeps App.tsx minimal so the app renders end-to-end.
+ */
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="light" />
+      <RootNavigator />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
