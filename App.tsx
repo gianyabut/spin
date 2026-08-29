@@ -25,7 +25,7 @@ SplashScreen.preventAutoHideAsync();
  * the store-state-driven RootNavigator.
  */
 export default function App() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     BarlowCondensed_500Medium,
     BarlowCondensed_600SemiBold,
     BarlowCondensed_700Bold,
@@ -35,21 +35,29 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      await Promise.all([
-        useHistory.getState().hydrate(),
-        useSettings.getState().hydrate(),
-      ]);
-      useBike.getState().setSource(
-        USE_SIMULATED ? new SimulatedBikeSource() : new FtmsBikeSource(),
-      );
-      // setSource must run first so the onState subscription exists; a successful
-      // reconnect flips conn to 'connected' and RootNavigator skips the Connect screen.
-      await useBike.getState().attemptReconnect();
-      setHydrated(true);
+      try {
+        // setSource must run first so the onState subscription exists; a successful
+        // reconnect flips conn to 'connected' and RootNavigator skips the Connect screen.
+        // Do it before the awaits below so the source is wired even if hydration throws.
+        useBike.getState().setSource(
+          USE_SIMULATED ? new SimulatedBikeSource() : new FtmsBikeSource(),
+        );
+        await Promise.all([
+          useHistory.getState().hydrate(),
+          useSettings.getState().hydrate(),
+        ]);
+        await useBike.getState().attemptReconnect();
+      } finally {
+        // ALWAYS flip hydrated so the splash can hide and RootNavigator renders,
+        // even if hydration/reconnect throws (corrupt storage, etc.) — the stores
+        // fall back to seed/defaults in that case.
+        setHydrated(true);
+      }
     })();
   }, []);
 
-  const ready = fontsLoaded && hydrated;
+  // A font-load failure degrades to the system font instead of hanging on the splash.
+  const ready = (fontsLoaded || !!fontError) && hydrated;
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync();

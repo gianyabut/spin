@@ -8,6 +8,7 @@ test('scan reports a simulated device then connect flips state to connected', as
   expect(found[0]).toMatch(/YESOUL/i);
   await s.connect('sim');
   expect(s.getState()).toBe('connected');
+  await s.disconnect();
 });
 
 test('emits readings that ease toward the set target', async () => {
@@ -19,4 +20,5 @@ test('emits readings that ease toward the set target', async () => {
   await new Promise(r => setTimeout(r, 120)); // a few ticks (tick=30ms in test mode)
   expect(readings.length).toBeGreaterThan(1);
   expect(readings[readings.length - 1]).toBeGreaterThan(readings[0]);
+  await s.disconnect();
 });

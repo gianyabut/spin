@@ -53,9 +53,16 @@ export const useBike = create<S>((set, get) => ({
     const prev = get(); if (prev._timer) clearInterval(prev._timer); prev._unsub?.();
     const src = get().source;
     const unsub = src.onData(r => set({ _latest: r }));
-    set({ session: startSession(program), summary: null, _unsub: unsub });
+    // Reset _latest so the new ride's first tick can't consume a stale reading
+    // from the prior ride (or the initial seed).
+    set({ session: startSession(program), summary: null, _unsub: unsub, _latest: { cadence: 0, ts: 0 } });
     const timer = setInterval(() => {
       const st = get(); if (!st.session) return;
+      // Program advance drives target rpm + resistance to the source ONLY for the
+      // simulator. This is intentional: a real bike's resistance is READ from its
+      // broadcast, not commanded on program advance — programs guide the rider via
+      // the on-screen ▲/▼ cue, and only a manual +/- writes to a controllable bike.
+      // (Auto-driving a real bike during programs is a deferred product decision.)
       if (src instanceof SimulatedBikeSource && !st.session.paused) {
         const seg = currentSegment(st.session);
         src.setTarget(seg ? (seg.lo + seg.hi) / 2 : 85);
