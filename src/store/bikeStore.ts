@@ -20,6 +20,7 @@ export const useBike = create<S>((set, get) => ({
   _latest: { cadence: 0, ts: 0 }, _timer: null, _unsub: null,
   setSource: (src) => { set({ source: src }); src.onState(conn => set({ conn })); },
   startRide: (program) => {
+    const prev = get(); if (prev._timer) clearInterval(prev._timer); prev._unsub?.();
     const src = get().source;
     const unsub = src.onData(r => set({ _latest: r }));
     set({ session: startSession(program), summary: null, _unsub: unsub });
@@ -37,7 +38,8 @@ export const useBike = create<S>((set, get) => ({
     set({ _timer: timer });
   },
   endRide: () => {
-    const st = get(); if (st._timer) clearInterval(st._timer); st._unsub?.();
+    const st = get(); if (!st.session && !st._timer) return;
+    if (st._timer) clearInterval(st._timer); st._unsub?.();
     const summary = st.session ? buildSummary(st.session, useHistory.getState().rides) : null;
     set({ session: null, summary, _timer: null, _unsub: null });
   },
