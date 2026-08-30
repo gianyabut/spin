@@ -13,7 +13,7 @@ test('renders cadence and metric labels during a ride', async () => {
   useBike.getState().startRide(null);
 
   render(<LiveRideScreen onEnd={() => {}} />);
-  await waitFor(() => screen.getByText('KCAL'));
+  await waitFor(() => screen.getByText('WATTS'));
   screen.getByText('FREE RIDE');
   screen.getByText('RPM · FIND YOUR RHYTHM');
 

@@ -22,8 +22,8 @@ export function parseIndoorBikeData(input: number[] | Uint8Array): BikeReading {
   if (flags & (1 << 4)) { r.distanceKm = u24(o) / 1000; o += 3; }
   // bit5 Resistance Level (sint16)
   if (flags & (1 << 5)) { r.resistance = s16(o); o += 2; }
-  // bit6 instantaneous power (sint16) — skip
-  if (flags & (1 << 6)) { o += 2; }
+  // bit6 Instantaneous Power (sint16, watts)
+  if (flags & (1 << 6)) { r.power = s16(o); o += 2; }
   // bit7 average power — skip
   if (flags & (1 << 7)) { o += 2; }
   // bit8 Total Energy group (total kcal uint16, per-hour uint16, per-min uint8)

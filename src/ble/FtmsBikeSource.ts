@@ -26,8 +26,11 @@ export class FtmsBikeSource implements BikeSource {
   private notifySub: Subscription | null = null;
   // Last connection failure, human-readable — surfaced by the Connect screen.
   lastError: string | null = null;
-  // The S3 splits telemetry across two characteristics (FTMS = speed,
-  // fff0/fff4 = cadence + resistance), so we accumulate both into one reading.
+  // Latches once the bike is seen broadcasting standard FTMS power (the S3 sends
+  // it in interleaved packets), so we prefer it over any proprietary estimate.
+  private ftmsHasPower = false;
+  // The S3 splits telemetry: FTMS carries speed + (interleaved) calibrated power;
+  // fff0/fff4 carries cadence + resistance. Merge both into one reading.
   private latest: BikeReading = { cadence: 0, ts: 0 };
 
   getState() { return this.state; }
@@ -78,13 +81,21 @@ export class FtmsBikeSource implements BikeSource {
           if (r.speedKmh !== undefined) patch.speedKmh = r.speedKmh;
           if (r.distanceKm !== undefined) patch.distanceKm = r.distanceKm;
           if (r.calories !== undefined) patch.calories = r.calories;
+          // Prefer standard FTMS instantaneous power (calibrated watts) when present.
+          if (r.power !== undefined) { this.ftmsHasPower = true; patch.power = r.power; }
           this.emit(patch);
         });
       // Cadence (RPM) = fff4 byte[6], resistance level = fff4 byte[4].
       dev.monitorCharacteristicForService(YESOUL_SERVICE, YESOUL_DATA, (err, ch) => {
         if (err || !ch?.value) return;
         const bytes = b64ToBytes(ch.value);
-        if (bytes.length > 6) this.emit({ cadence: bytes[6], resistance: bytes[4] });
+        // byte[6] = cadence (RPM), byte[4] = resistance level. (bytes[8..9] hold a
+        // proprietary effort value used only if the bike lacks FTMS power.)
+        if (bytes.length > 9) {
+          const patch: Partial<BikeReading> = { cadence: bytes[6], resistance: bytes[4] };
+          if (!this.ftmsHasPower) patch.power = bytes[8] | (bytes[9] << 8);
+          this.emit(patch);
+        }
       });
       dev.onDisconnected(() => this.set('idle'));
       this.set('connected');

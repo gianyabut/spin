@@ -6,7 +6,7 @@ export function startSession(program: Program | null): Session {
   return {
     program, elapsed: 0, segIdx: 0, segElapsed: 0, paused: false,
     cadence: 62, resistance: program ? program.segs[0].res : 8,
-    speedKmh: 0, distanceKm: 0, calories: 0, rpmSum: 0, rpmN: 0,
+    speedKmh: 0, distanceKm: 0, calories: 0, power: 0, rpmSum: 0, rpmN: 0,
   };
 }
 export const currentSegment = (s: Session): Segment | null => s.program ? s.program.segs[s.segIdx] : null;
@@ -30,6 +30,7 @@ export function tick(s: Session, r: BikeReading): { session: Session; finished: 
       ...s, elapsed: s.elapsed + 1, segIdx, segElapsed, resistance, cadence, speedKmh,
       distanceKm: r.distanceKm ?? s.distanceKm + speedKmh / 3600,
       calories: r.calories ?? s.calories + deriveKcalPerSec(cadence, resistance),
+      power: r.power ?? s.power,
       rpmSum: s.rpmSum + cadence, rpmN: s.rpmN + 1,
     },
     finished: false,

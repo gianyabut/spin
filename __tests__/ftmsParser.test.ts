@@ -1,5 +1,13 @@
 import { parseIndoorBikeData } from '../src/ble/ftmsParser';
 
+// flags=0x0040 → bit0=0 (speed present), bit6=1 (instantaneous power). LE.
+// speed=0 ; power=150 (0x0096) watts
+test('parses instantaneous power (bit6)', () => {
+  const bytes = [0x40, 0x00, 0x00, 0x00, 0x96, 0x00];
+  const r = parseIndoorBikeData(bytes);
+  expect(r.power).toBe(150);
+});
+
 // flags=0x0004 → bit0=0 (speed present), bit2=1 (cadence present). LE.
 // speed=2500 (0x09C4) = 25.00 km/h ; cadence=180 (0x00B4) = 90.0 rpm (÷2)
 test('parses speed and cadence', () => {

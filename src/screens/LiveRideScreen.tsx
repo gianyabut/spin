@@ -24,8 +24,6 @@ export function fmt(sec: number): string {
  */
 export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
   const session = useBike(s => s.session);
-  const resInc = useBike(s => s.resInc);
-  const resDec = useBike(s => s.resDec);
   const setPaused = useBike(s => s.setPaused);
   const canControl = useBike(s => s.source.capabilities.control);
   const units = useSettings(s => s.units);
@@ -59,7 +57,6 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
   const resistanceLabel = 'RESISTANCE ' + session.resistance;
   const speedFmt = convSpeed(session.speedKmh, units).toFixed(1);
   const distFmt = convDist(session.distanceKm, units).toFixed(1);
-  const calFmt = String(Math.round(session.calories));
   const elapsedFmt = fmt(session.elapsed);
   const pauseLabel = session.paused ? 'RESUME' : 'PAUSE';
 
@@ -173,29 +170,9 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
         </T>
       </View>
 
-      {/* Resistance segmented control — [−] RESISTANCE n ▲/▼ [+] */}
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'stretch',
-          marginTop: 16,
-        }}
-      >
-        <Pressable
-          onPress={resDec}
-          style={({ pressed }) => ({
-            borderWidth: 2,
-            borderColor: colors.surface,
-            borderRightWidth: 0,
-            paddingVertical: 6,
-            paddingHorizontal: 18,
-            justifyContent: 'center',
-            backgroundColor: pressed ? colors.surface : 'transparent',
-          })}
-        >
-          <T style={{ color: colors.text, fontSize: 20, fontWeight: '800' }}>−</T>
-        </Pressable>
+      {/* Resistance readout — live from the bike; the physical knob is the
+          source of truth, so there is no in-app +/- control. */}
+      <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 16 }}>
         <View
           style={{
             borderWidth: 2,
@@ -211,20 +188,6 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
             {resCue(session)}
           </T>
         </View>
-        <Pressable
-          onPress={resInc}
-          style={({ pressed }) => ({
-            borderWidth: 2,
-            borderColor: colors.surface,
-            borderLeftWidth: 0,
-            paddingVertical: 6,
-            paddingHorizontal: 18,
-            justifyContent: 'center',
-            backgroundColor: pressed ? colors.surface : 'transparent',
-          })}
-        >
-          <T style={{ color: colors.text, fontSize: 20, fontWeight: '800' }}>+</T>
-        </Pressable>
       </View>
 
       {/* Read-only note — shown only when the bike can't accept resistance writes.
@@ -258,7 +221,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
       >
         <MetricColumn value={speedFmt} label={speedLabel(units)} />
         <MetricColumn value={distFmt} label={distLabel(units)} />
-        <MetricColumn value={calFmt} label="KCAL" />
+        <MetricColumn value={String(Math.round(session.power))} label="WATTS" />
         <MetricColumn value={elapsedFmt} label="TIME" />
       </View>
 
