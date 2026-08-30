@@ -17,6 +17,8 @@ export function ConnectScreen({
   onConnected: () => void;
 }) {
   const [device, setDevice] = useState<DiscoveredDevice | null>(null);
+  const [connecting, setConnecting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const stop = source.scan(setDevice);
@@ -144,16 +146,41 @@ export function ConnectScreen({
 
           <View style={{ flex: 1 }} />
 
+          {/* Connection error (surfaced from the BLE layer for diagnostics) */}
+          {error && (
+            <T
+              style={{
+                fontSize: 13,
+                fontWeight: '600',
+                letterSpacing: 0.5,
+                color: colors.accent,
+                marginBottom: 12,
+              }}
+            >
+              CONNECT FAILED — {error}
+            </T>
+          )}
+
           {/* Full-width orange CONNECT button — 18 / 800 / .15em, press scale .98 */}
           <Pressable
+            disabled={connecting}
             onPress={async () => {
-              await source.connect(device.id);
-              useSettings.getState().setLastDevice(device.id); // remember for next-launch auto-reconnect
-              onConnected();
+              setError(null);
+              setConnecting(true);
+              try {
+                await source.connect(device.id);
+                useSettings.getState().setLastDevice(device.id); // remember for next-launch auto-reconnect
+                onConnected();
+              } catch (e: any) {
+                setError(e?.message ?? 'unknown error');
+              } finally {
+                setConnecting(false);
+              }
             }}
             style={({ pressed }) => ({
               backgroundColor: colors.accent,
               paddingVertical: 16,
+              opacity: connecting ? 0.6 : 1,
               transform: [{ scale: pressed ? 0.98 : 1 }],
             })}
           >
@@ -166,7 +193,7 @@ export function ConnectScreen({
                 letterSpacing: 2.7,
               }}
             >
-              CONNECT
+              {connecting ? 'CONNECTING…' : 'CONNECT'}
             </T>
           </Pressable>
         </>
