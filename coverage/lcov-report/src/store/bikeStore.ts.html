@@ -1,0 +1,346 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/store/bikeStore.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/store</a> bikeStore.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">94.23% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>49/52</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">75% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>24/32</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">93.33% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>14/15</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>35/35</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">71x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { create } from 'zustand';
+import type { BikeSource, BikeReading, ConnState } from '../ble/BikeSource';
+import { SimulatedBikeSource } from '../ble/SimulatedBikeSource';
+import type { Program, Session, Summary } from '../engine/types';
+import { startSession, tick, togglePause, currentSegment, buildSummary } from '../engine/rideEngine';
+import { useHistory } from './historyStore';
+import { useSettings } from './settingsStore';
+&nbsp;
+type S = {
+  source: BikeSource; conn: ConnState; session: Session | null; summary: Summary | null;
+  _latest: BikeReading; _timer: any; _unsub: (() =&gt; void) | null;
+  setSource: (src: BikeSource) =&gt; void;
+  attemptReconnect: () =&gt; Promise&lt;void&gt;;
+  startRide: (p: Program | null) =&gt; void;
+  endRide: () =&gt; void;
+  setPaused: () =&gt; void;
+  resInc: () =&gt; void; resDec: () =&gt; void;
+  clearSummary: () =&gt; void;
+};
+// Adjust the local resistance target (clamped 1..32) and, only when the source
+// reports control capability, forward the new level to the bike. On a read-only
+// source (capabilities.control === false) we still move the local target so the
+// ▲/▼ cue updates, but never write to the hardware. Bike-write is fire-and-forget;
+// a rejected Promise is swallowed so the action can't crash. (Task 6.3)
+function setResistanceLevel(get: () =&gt; S, set: (p: Partial&lt;S&gt;) =&gt; void, delta: 1 | -1) {
+  const st = get();
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!st.session) <span class="cstat-no" title="statement not covered" >return;</span>
+  const next = delta &gt; 0
+    ? Math.min(32, st.session.resistance + 1)
+    : Math.max(1, st.session.resistance - 1);
+  set({ session: { ...st.session, resistance: next } });
+  const src = get().source;
+  if (src.capabilities.control &amp;&amp; src.setResistance) {
+    src.setResistance(next)?.catch(<span class="fstat-no" title="function not covered" >()</span> =&gt; {});
+  }
+}
+&nbsp;
+export const useBike = create&lt;S&gt;((set, get) =&gt; ({
+  source: new SimulatedBikeSource(), conn: 'idle', session: null, summary: null,
+  _latest: { cadence: 0, ts: 0 }, _timer: null, _unsub: null,
+  setSource: (src) =&gt; { set({ source: src }); src.onState(conn =&gt; set({ conn })); },
+  attemptReconnect: async () =&gt; {
+    const lastDeviceId = useSettings.getState().lastDeviceId;
+    if (!lastDeviceId) return; // nothing stored → leave conn idle so the Connect scan shows
+    try {
+      // On success the source's onState (subscribed in setSource) flips conn to 'connected'.
+      await get().source.connect(lastDeviceId);
+    } catch {
+      // Swallow: leave conn idle/error so the app falls back to the Connect scan.
+    }
+  },
+  startRide: (program) =&gt; {
+    const prev = get(); if (prev._timer) clearInterval(prev._timer); prev._unsub?.();
+    const src = get().source;
+    const unsub = src.onData(r =&gt; set({ _latest: r }));
+    // Reset _latest so the new ride's first tick can't consume a stale reading
+    // from the prior ride (or the initial seed).
+    set({ session: startSession(program), summary: null, _unsub: unsub, _latest: { cadence: 0, ts: 0 } });
+    const timer = setInterval(() =&gt; {
+      const st = get(); <span class="missing-if-branch" title="if path not taken" >I</span>if (!st.session) <span class="cstat-no" title="statement not covered" >return;</span>
+      // Program advance drives target rpm + resistance to the source ONLY for the
+      // simulator. This is intentional: a real bike's resistance is READ from its
+      // broadcast, not commanded on program advance — programs guide the rider via
+      // the on-screen ▲/▼ cue, and only a manual +/- writes to a controllable bike.
+      // (Auto-driving a real bike during programs is a deferred product decision.)
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (src instanceof SimulatedBikeSource &amp;&amp; !st.session.paused) {
+        const seg = currentSegment(st.session);
+        src.setTarget(seg ? <span class="branch-0 cbranch-no" title="branch not covered" >(seg.lo + seg.hi) / 2 </span>: 85);
+        src.setResistance(st.session.resistance);
+      }
+      const { session, finished } = tick(st.session, st._latest);
+      set({ session });
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (finished) <span class="cstat-no" title="statement not covered" >get().endRide();</span>
+    }, 1000);
+    set({ _timer: timer });
+  },
+  endRide: () =&gt; {
+    const st = get(); if (!st.session &amp;&amp; !st._timer) return;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (st._timer) clearInterval(st._timer); st._unsub?.();
+    const summary = st.session ? buildSummary(st.session, useHistory.getState().rides) : <span class="branch-1 cbranch-no" title="branch not covered" >null;</span>
+    set({ session: null, summary, _timer: null, _unsub: null });
+  },
+  setPaused: () =&gt; set(st =&gt; ({ session: st.session ? togglePause(st.session) : <span class="branch-1 cbranch-no" title="branch not covered" >null </span>})),
+  resInc: () =&gt; setResistanceLevel(get, set, 1),
+  resDec: () =&gt; setResistanceLevel(get, set, -1),
+  clearSummary: () =&gt; set({ summary: null }),
+}));
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-09-05T14:02:51.349Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
