@@ -29,7 +29,8 @@
       "expo-dev-client",
       "react-native-ble-plx",
       "expo-font",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      "expo-image"
     ]
   }
 }
