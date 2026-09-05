@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pulse",
+    "name": "SPIN",
     "slug": "pulse",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,7 @@
       "bundleIdentifier": "com.pulse.spin",
       "supportsTablet": false,
       "infoPlist": {
-        "NSBluetoothAlwaysUsageDescription": "PULSE connects to your Yesoul S3 bike over Bluetooth to show live ride metrics."
+        "NSBluetoothAlwaysUsageDescription": "SPIN connects to your Yesoul S3 bike over Bluetooth to show live ride metrics."
       }
     },
     "android": {
