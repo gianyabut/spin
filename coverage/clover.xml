@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1788616971359" clover="3.2.0">
+  <project timestamp="1788616971359" name="All files">
+    <metrics statements="414" coveredstatements="406" conditionals="334" coveredconditionals="284" methods="166" coveredmethods="152" elements="914" coveredelements="842" complexity="0" loc="414" ncloc="414" packages="9" files="27" classes="27"/>
+    <package name="src">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="config.ts" path="/Users/ian/Projects/spin/src/config.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.ble">
+      <metrics statements="114" coveredstatements="114" conditionals="65" coveredconditionals="57" methods="45" coveredmethods="42"/>
+      <file name="FtmsBikeSource.ts" path="/Users/ian/Projects/spin/src/ble/FtmsBikeSource.ts">
+        <metrics statements="69" coveredstatements="69" conditionals="41" coveredconditionals="34" methods="22" coveredmethods="20"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="6" type="stmt"/>
+        <line num="21" count="6" type="stmt"/>
+        <line num="22" count="6" type="stmt"/>
+        <line num="23" count="6" type="stmt"/>
+        <line num="24" count="6" type="stmt"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="31" count="6" type="stmt"/>
+        <line num="34" count="6" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
+        <line num="37" count="13" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="49" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="55" count="5" type="stmt"/>
+        <line num="56" count="5" type="stmt"/>
+        <line num="57" count="5" type="stmt"/>
+        <line num="58" count="5" type="stmt"/>
+        <line num="59" count="5" type="stmt"/>
+        <line num="60" count="5" type="stmt"/>
+        <line num="61" count="5" type="stmt"/>
+        <line num="62" count="4" type="stmt"/>
+        <line num="63" count="4" type="stmt"/>
+        <line num="64" count="4" type="stmt"/>
+        <line num="66" count="4" type="stmt"/>
+        <line num="67" count="4" type="stmt"/>
+        <line num="68" count="4" type="stmt"/>
+        <line num="70" count="3" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="4" type="stmt"/>
+        <line num="76" count="4" type="stmt"/>
+        <line num="78" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="82" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="83" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="85" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="89" count="4" type="stmt"/>
+        <line num="90" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="94" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="1" type="stmt"/>
+        <line num="100" count="4" type="stmt"/>
+        <line num="101" count="4" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="113" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+        <line num="121" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="122" count="1" type="stmt"/>
+        <line num="126" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="127" count="1" type="stmt"/>
+      </file>
+      <file name="SimulatedBikeSource.ts" path="/Users/ian/Projects/spin/src/ble/SimulatedBikeSource.ts">
+        <metrics statements="22" coveredstatements="22" conditionals="4" coveredconditionals="3" methods="17" coveredmethods="16"/>
+        <line num="4" count="20" type="stmt"/>
+        <line num="5" count="20" type="stmt"/>
+        <line num="6" count="20" type="stmt"/>
+        <line num="7" count="20" type="stmt"/>
+        <line num="8" count="20" type="stmt"/>
+        <line num="9" count="20" type="stmt"/>
+        <line num="10" count="20" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="30" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="22" count="75" type="stmt"/>
+        <line num="24" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="31" count="75" type="stmt"/>
+        <line num="32" count="75" type="stmt"/>
+        <line num="33" count="75" type="stmt"/>
+      </file>
+      <file name="constants.ts" path="/Users/ian/Projects/spin/src/ble/constants.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+      </file>
+      <file name="ftmsControl.ts" path="/Users/ian/Projects/spin/src/ble/ftmsControl.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+      </file>
+      <file name="ftmsParser.ts" path="/Users/ian/Projects/spin/src/ble/ftmsParser.ts">
+        <metrics statements="17" coveredstatements="17" conditionals="20" coveredconditionals="20" methods="4" coveredmethods="4"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="5" count="26" type="stmt"/>
+        <line num="6" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="9" count="8" type="stmt"/>
+        <line num="10" count="8" type="stmt"/>
+        <line num="11" count="8" type="stmt"/>
+        <line num="14" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="8" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.engine">
+      <metrics statements="57" coveredstatements="57" conditionals="52" coveredconditionals="49" methods="22" coveredmethods="22"/>
+      <file name="formulas.ts" path="/Users/ian/Projects/spin/src/engine/formulas.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="8" coveredconditionals="7" methods="6" coveredmethods="6"/>
+        <line num="5" count="14" type="stmt"/>
+        <line num="6" count="126" type="stmt"/>
+        <line num="7" count="14" type="stmt"/>
+        <line num="8" count="126" type="stmt"/>
+        <line num="9" count="38" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="11" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="14" type="cond" truecount="2" falsecount="0"/>
+      </file>
+      <file name="programs.ts" path="/Users/ian/Projects/spin/src/engine/programs.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="15" type="stmt"/>
+        <line num="3" count="15" type="stmt"/>
+        <line num="4" count="120" type="stmt"/>
+        <line num="5" count="120" type="stmt"/>
+        <line num="7" count="15" type="stmt"/>
+        <line num="9" count="15" type="stmt"/>
+        <line num="24" count="46" type="stmt"/>
+        <line num="25" count="15" type="stmt"/>
+      </file>
+      <file name="records.ts" path="/Users/ian/Projects/spin/src/engine/records.ts">
+        <metrics statements="18" coveredstatements="18" conditionals="12" coveredconditionals="10" methods="8" coveredmethods="8"/>
+        <line num="13" count="34" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="26" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="19" type="stmt"/>
+        <line num="30" count="14" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="7" type="stmt"/>
+        <line num="43" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="44" count="7" type="stmt"/>
+        <line num="45" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="46" count="6" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="57" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="58" count="4" type="stmt"/>
+        <line num="59" count="4" type="stmt"/>
+      </file>
+      <file name="rideEngine.ts" path="/Users/ian/Projects/spin/src/engine/rideEngine.ts">
+        <metrics statements="23" coveredstatements="23" conditionals="32" coveredconditionals="32" methods="6" coveredmethods="6"/>
+        <line num="7" count="15" type="stmt"/>
+        <line num="13" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="17" count="126" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="125" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="125" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="122" type="stmt"/>
+        <line num="21" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="27" count="124" type="stmt"/>
+        <line num="28" count="124" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="124" type="stmt"/>
+        <line num="41" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="47" count="8" type="stmt"/>
+        <line num="48" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="8" type="stmt"/>
+        <line num="52" count="8" type="stmt"/>
+        <line num="53" count="8" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.navigation">
+      <metrics statements="15" coveredstatements="12" conditionals="16" coveredconditionals="11" methods="12" coveredmethods="6"/>
+      <file name="RootNavigator.tsx" path="/Users/ian/Projects/spin/src/navigation/RootNavigator.tsx">
+        <metrics statements="12" coveredstatements="9" conditionals="14" coveredconditionals="9" methods="9" coveredmethods="4"/>
+        <line num="32" count="10" type="stmt"/>
+        <line num="33" count="10" type="stmt"/>
+        <line num="34" count="10" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="38" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="43" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="48" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+      </file>
+      <file name="TabBar.tsx" path="/Users/ian/Projects/spin/src/navigation/TabBar.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="2"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="36" count="8" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.persistence">
+      <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
+      <file name="repository.ts" path="/Users/ian/Projects/spin/src/persistence/repository.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
+        <line num="3" count="15" type="stmt"/>
+        <line num="4" count="15" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+        <line num="18" count="8" type="stmt"/>
+        <line num="19" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="27" count="15" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.screens">
+      <metrics statements="146" coveredstatements="141" conditionals="151" coveredconditionals="127" methods="52" coveredmethods="48"/>
+      <file name="ConnectScreen.tsx" path="/Users/ian/Projects/spin/src/screens/ConnectScreen.tsx">
+        <metrics statements="33" coveredstatements="32" conditionals="49" coveredconditionals="42" methods="6" coveredmethods="6"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="56" count="3" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+        <line num="59" count="3" type="stmt"/>
+        <line num="61" count="3" type="stmt"/>
+        <line num="158" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="159" count="1" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="161" count="1" type="stmt"/>
+        <line num="162" count="1" type="stmt"/>
+        <line num="163" count="1" type="stmt"/>
+        <line num="164" count="1" type="stmt"/>
+        <line num="166" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="168" count="1" type="stmt"/>
+        <line num="171" count="2" type="stmt"/>
+        <line num="196" count="12" type="stmt"/>
+        <line num="197" count="12" type="stmt"/>
+        <line num="203" count="12" type="stmt"/>
+      </file>
+      <file name="HomeScreen.tsx" path="/Users/ian/Projects/spin/src/screens/HomeScreen.tsx">
+        <metrics statements="17" coveredstatements="15" conditionals="10" coveredconditionals="7" methods="8" coveredmethods="7"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
+        <line num="26" count="9" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="29" count="3" type="cond" truecount="2" falsecount="2"/>
+        <line num="31" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="89" count="6" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+      </file>
+      <file name="LiveRideScreen.tsx" path="/Users/ian/Projects/spin/src/screens/LiveRideScreen.tsx">
+        <metrics statements="35" coveredstatements="33" conditionals="49" coveredconditionals="39" methods="11" coveredmethods="9"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="20" count="13" type="stmt"/>
+        <line num="21" count="13" type="stmt"/>
+        <line num="22" count="13" type="stmt"/>
+        <line num="33" count="26" type="stmt"/>
+        <line num="34" count="26" type="stmt"/>
+        <line num="35" count="18" type="stmt"/>
+        <line num="36" count="18" type="stmt"/>
+        <line num="38" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="36" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="49" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="50" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="53" count="4" type="stmt"/>
+        <line num="54" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="57" count="4" type="stmt"/>
+        <line num="58" count="4" type="stmt"/>
+        <line num="59" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="62" count="4" type="stmt"/>
+        <line num="63" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="64" count="2" type="stmt"/>
+        <line num="65" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="66" count="6" type="cond" truecount="0" falsecount="2"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="76" count="4" type="stmt"/>
+        <line num="98" count="36" type="stmt"/>
+        <line num="174" count="0" type="stmt"/>
+        <line num="175" count="0" type="stmt"/>
+      </file>
+      <file name="ProfileScreen.tsx" path="/Users/ian/Projects/spin/src/screens/ProfileScreen.tsx">
+        <metrics statements="19" coveredstatements="19" conditionals="12" coveredconditionals="10" methods="8" coveredmethods="8"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="25" count="12" type="stmt"/>
+        <line num="26" count="14" type="stmt"/>
+        <line num="27" count="14" type="stmt"/>
+        <line num="29" count="12" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="34" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="37" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="39" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="116" count="12" type="stmt"/>
+        <line num="127" count="12" type="stmt"/>
+      </file>
+      <file name="ProgramsScreen.tsx" path="/Users/ian/Projects/spin/src/screens/ProgramsScreen.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="2" methods="5" coveredmethods="5"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="3" type="stmt"/>
+      </file>
+      <file name="RidesScreen.tsx" path="/Users/ian/Projects/spin/src/screens/RidesScreen.tsx">
+        <metrics statements="16" coveredstatements="16" conditionals="14" coveredconditionals="14" methods="7" coveredmethods="7"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="43" count="6" type="stmt"/>
+        <line num="44" count="6" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="107" count="3" type="stmt"/>
+      </file>
+      <file name="SummaryScreen.tsx" path="/Users/ian/Projects/spin/src/screens/SummaryScreen.tsx">
+        <metrics statements="16" coveredstatements="16" conditionals="13" coveredconditionals="13" methods="7" coveredmethods="6"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="34" count="13" type="stmt"/>
+        <line num="35" count="12" type="stmt"/>
+        <line num="37" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="40" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="41" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="70" count="21" type="stmt"/>
+        <line num="124" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.store">
+      <metrics statements="52" coveredstatements="52" conditionals="34" coveredconditionals="26" methods="27" coveredmethods="26"/>
+      <file name="bikeStore.ts" path="/Users/ian/Projects/spin/src/store/bikeStore.ts">
+        <metrics statements="35" coveredstatements="35" conditionals="32" coveredconditionals="24" methods="15" coveredmethods="14"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="27" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="33" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="10" type="stmt"/>
+        <line num="41" count="9" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="44" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="53" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="8" type="stmt"/>
+        <line num="55" count="71" type="stmt"/>
+        <line num="58" count="8" type="stmt"/>
+        <line num="59" count="8" type="stmt"/>
+        <line num="60" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="66" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="68" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="73" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="75" count="8" type="stmt"/>
+        <line num="78" count="8" type="cond" truecount="4" falsecount="0"/>
+        <line num="79" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="80" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="81" count="7" type="stmt"/>
+        <line num="83" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="86" count="2" type="stmt"/>
+      </file>
+      <file name="historyStore.ts" path="/Users/ian/Projects/spin/src/store/historyStore.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="8"/>
+        <line num="13" count="13" type="stmt"/>
+        <line num="15" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+      </file>
+      <file name="settingsStore.ts" path="/Users/ian/Projects/spin/src/store/settingsStore.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="5" count="13" type="stmt"/>
+        <line num="15" count="13" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.ui">
+      <metrics statements="13" coveredstatements="13" conditionals="12" coveredconditionals="10" methods="2" coveredmethods="2"/>
+      <file name="text.tsx" path="/Users/ian/Projects/spin/src/ui/text.tsx">
+        <metrics statements="9" coveredstatements="9" conditionals="12" coveredconditionals="10" methods="2" coveredmethods="2"/>
+        <line num="12" count="331" type="cond" truecount="10" falsecount="2"/>
+        <line num="18" count="123" type="stmt"/>
+        <line num="21" count="111" type="stmt"/>
+        <line num="24" count="43" type="stmt"/>
+        <line num="28" count="54" type="stmt"/>
+        <line num="33" count="331" type="stmt"/>
+        <line num="34" count="331" type="stmt"/>
+        <line num="37" count="331" type="stmt"/>
+        <line num="40" count="10" type="stmt"/>
+      </file>
+      <file name="tokens.ts" path="/Users/ian/Projects/spin/src/ui/tokens.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.ui.components">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="MetricColumn.tsx" path="/Users/ian/Projects/spin/src/ui/components/MetricColumn.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="12" count="16" type="stmt"/>
+      </file>
+      <file name="ScreenFrame.tsx" path="/Users/ian/Projects/spin/src/ui/components/ScreenFrame.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="18" count="21" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

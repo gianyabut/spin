@@ -1,6 +1,7 @@
 import type { Session, Program, Segment, Summary, Ride } from './types';
 import type { BikeReading } from '../ble/BikeSource';
 import { deriveSpeedKmh, deriveKcalPerSec } from './formulas';
+import { bestKmForProgram } from './records';
 
 export function startSession(program: Program | null): Session {
   return {
@@ -44,7 +45,11 @@ export function resCue(s: Session): string {
 }
 export function buildSummary(s: Session, history: Ride[]): Summary {
   const km = s.distanceKm;
-  const pb = km > Math.max(0, ...history.map(h => h.km));
-  return { name: s.program ? s.program.name : 'Free ride', sec: s.elapsed, km,
-    kcal: Math.round(s.calories), avgRpm: s.rpmN ? Math.round(s.rpmSum / s.rpmN) : 0, pb };
+  const name = s.program ? s.program.name : 'Free ride';
+  // Per-program PB (redesign): beating your best HIIT counts even if a longer
+  // endurance ride exists. prevBestKm feeds the Summary's "PREVIOUS BEST" line.
+  const prevBestKm = bestKmForProgram(history, name);
+  const pb = km > prevBestKm;
+  return { name, sec: s.elapsed, km,
+    kcal: Math.round(s.calories), avgRpm: s.rpmN ? Math.round(s.rpmSum / s.rpmN) : 0, pb, prevBestKm };
 }
