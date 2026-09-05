@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, ScrollView, Pressable } from 'react-native';
+import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useBike } from '../store/bikeStore';
 import { PROGRAMS, totalDur } from '../engine/programs';
 import { colors } from '../ui/tokens';
@@ -7,17 +9,19 @@ import { T } from '../ui/text';
 import { ScreenFrame } from '../ui/components/ScreenFrame';
 import type { Program } from '../engine/types';
 
+// Cycling imagery matched to each program's character.
+const PHOTOS: Record<string, any> = {
+  hiit30: require('../../assets/photos/ride-hero.jpg'),
+  end45: require('../../assets/photos/prog-endurance.jpg'),
+  pyr20: require('../../assets/photos/prog-pyramid.jpg'),
+};
+const FALLBACK = require('../../assets/photos/ride-hero.jpg');
+
 /**
- * Programs — faithful port of the finalized prototype
- * (design/Yesoul PULSE App.dc.html lines 169–191). One card per program in
- * PROGRAMS: name 26/800 + total-minutes meta, desc line, an intensity strip
- * (one bar per segment), and an orange START button. START seeds the session
- * via startRide(program) then calls onStartRide (navigation is wired by the
- * nav task). Letter-spacing em values are converted to px (em × fontSize).
- *
- * Intensity strip bar math (exact prototype formulas):
- *   flexGrow = max(1, round(seg.dur / 30))
- *   height   = round(4 + (seg.res / 20) * 18) px
+ * Programs — "photo tiles" (lime redesign). Each program is a cinematic graded
+ * cycling tile (image matched to the workout) with a left scrim, minutes eyebrow,
+ * name, description and a START action. START seeds the session via
+ * startRide(program) then calls onStartRide (unchanged behaviour).
  */
 export function ProgramsScreen({ onStartRide }: { onStartRide: () => void }) {
   const start = (p: Program) => {
@@ -27,61 +31,43 @@ export function ProgramsScreen({ onStartRide }: { onStartRide: () => void }) {
 
   return (
     <ScreenFrame>
-      <ScrollView contentContainerStyle={{ paddingTop: 64, paddingHorizontal: 22, paddingBottom: 12 }}>
-        {/* Title — 34 / 800 */}
-        <T style={{ fontSize: 34, fontWeight: '800' }}>PROGRAMS</T>
-
-        {/* Sub — 14 / 600 / .15em (2.1px) / muted */}
-        <T style={{ fontSize: 14, fontWeight: '600', letterSpacing: 2.1, color: colors.muted, marginTop: 2 }}>
+      <ScrollView contentContainerStyle={{ paddingTop: 64, paddingHorizontal: 22, paddingBottom: 24 }}>
+        <T style={{ fontSize: 33, fontWeight: '800' }}>PROGRAMS</T>
+        <T style={{ fontSize: 13, fontWeight: '600', letterSpacing: 2.1, color: colors.muted, marginTop: 2 }}>
           STRUCTURED INTERVALS FOR THE S3
         </T>
 
-        {/* Cards — column, gap 12 */}
-        <View style={{ marginTop: 18, gap: 12 }}>
+        <View style={{ marginTop: 16, gap: 12 }}>
           {PROGRAMS.map(p => {
             const min = Math.round(totalDur(p) / 60);
             return (
-              <View key={p.id} style={{ borderWidth: 2, borderColor: colors.surface, padding: 16 }}>
-                {/* Header — name 26/800 left, total-min meta 15/700 muted right */}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <T style={{ fontSize: 26, fontWeight: '800', lineHeight: 26 }}>{p.name}</T>
-                  <T style={{ fontSize: 15, fontWeight: '700', color: colors.muted }}>{`${min} MIN`}</T>
-                </View>
+              <View key={p.id} style={{ height: 158, overflow: 'hidden', justifyContent: 'flex-end', padding: 15 }}>
+                <Image source={PHOTOS[p.id] ?? FALLBACK} contentFit="cover" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
+                <LinearGradient
+                  colors={['rgba(9,11,7,0.9)', 'rgba(9,11,7,0.35)', 'rgba(9,11,7,0.12)']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+                />
+                <LinearGradient
+                  colors={['rgba(9,11,7,0)', 'rgba(9,11,7,0.55)']}
+                  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+                />
+                <T style={{ fontSize: 12, fontWeight: '800', letterSpacing: 1.8, color: colors.accent }}>{min} MIN</T>
+                <T style={{ fontSize: 28, fontWeight: '800', lineHeight: 27, marginTop: 3 }}>{p.name}</T>
+                <T style={{ fontSize: 12, fontWeight: '600', letterSpacing: 1, color: colors.text, opacity: 0.9, marginTop: 3 }}>{p.desc}</T>
 
-                {/* Desc — 14 / .1em (1.4px) / muted */}
-                <T style={{ fontSize: 14, letterSpacing: 1.4, color: colors.muted, marginTop: 4 }}>{p.desc}</T>
-
-                {/* Intensity strip — one bar per segment; gap 3; 22px tall; bars bottom-aligned */}
-                <View style={{ flexDirection: 'row', gap: 3, marginTop: 12, height: 22, alignItems: 'flex-end' }}>
-                  {p.segs.map((seg, i) => (
-                    <View
-                      key={i}
-                      style={{
-                        flexGrow: Math.max(1, Math.round(seg.dur / 30)),
-                        flexBasis: 0,
-                        height: Math.round(4 + (seg.res / 20) * 18),
-                        backgroundColor: colors.surface,
-                      }}
-                    />
-                  ))}
-                </View>
-
-                {/* START — solid orange block, dark text, 15/800/.15em (2.25px) */}
                 <Pressable
                   onPress={() => start(p)}
-                  style={{ marginTop: 14, backgroundColor: colors.accent, paddingVertical: 10 }}
+                  style={({ pressed }) => ({
+                    position: 'absolute', right: 15, bottom: 15,
+                    backgroundColor: colors.accent, paddingHorizontal: 14, paddingVertical: 8,
+                    flexDirection: 'row', alignItems: 'center', gap: 6,
+                    transform: [{ scale: pressed ? 0.97 : 1 }],
+                  })}
                 >
-                  <T
-                    style={{
-                      color: colors.onAccent,
-                      textAlign: 'center',
-                      fontSize: 15,
-                      fontWeight: '800',
-                      letterSpacing: 2.25,
-                    }}
-                  >
-                    START
-                  </T>
+                  <T style={{ color: colors.onAccent, fontSize: 14, fontWeight: '800', letterSpacing: 1.8 }}>START</T>
+                  <T style={{ color: colors.onAccent, fontSize: 14, fontWeight: '800' }}>→</T>
                 </Pressable>
               </View>
             );
