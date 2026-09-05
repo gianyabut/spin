@@ -6,6 +6,6 @@ export type Session = {
   cadence: number; resistance: number; speedKmh: number; distanceKm: number; calories: number;
   power: number; rpmSum: number; rpmN: number;
 };
-export type Summary = { name: string; sec: number; km: number; kcal: number; avgRpm: number; pb: boolean };
+export type Summary = { name: string; sec: number; km: number; kcal: number; avgRpm: number; pb: boolean; prevBestKm?: number };
 export type Ride = { id: string; name: string; when: string; min: number; km: number; kcal: number; date: string };
 export type Settings = { units: Units; weeklyGoalKm: number; lastDeviceId: string | null };
