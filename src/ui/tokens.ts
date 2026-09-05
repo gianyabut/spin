@@ -1,7 +1,7 @@
 export const colors = {
-  bg: '#121014', surface: '#332E36', rule: '#241f27',
-  text: '#F4F1EC', muted: '#9B959D',
-  accent: '#FF5C1F', accentHover: '#ff6e38', onAccent: '#121014',
+  bg: '#0F110E', surface: '#2F322C', rule: '#242820',
+  text: '#F4F1EC', muted: '#A6A99F',
+  accent: '#CBFF3C', accentHover: '#d8ff5c', onAccent: '#101208',
 } as const;
 export const space = { screenX: 22, cardGap: 12, segGap: 4 } as const;
 export const type = {

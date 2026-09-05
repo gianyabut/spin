@@ -24,7 +24,7 @@ Begin at **Task 0.1** (scaffolds the Expo app into this repo). Later tasks assum
 ## Non-negotiable constraints (from the spec's Global Constraints)
 
 - **FTMS cadence is in 0.5-rpm units — divide by 2.** (Already handled/tested in the parser task; don't undo it.)
-- Design tokens are exact: bg `#121014`, accent `#FF5C1F`, border `#332E36`, hairline `#241f27`, text `#F4F1EC`, muted `#9B959D`. **Border-radius 0 everywhere except circles.** 2px borders. Font **Barlow Condensed**. All copy UPPERCASE as in the prototype.
+- Design tokens (updated for the 2026-09 "lime PULSE" redesign): bg `#0F110E`, accent `#CBFF3C`, on-accent `#101208`, border/surface `#2F322C`, hairline `#242820`, text `#F4F1EC`, muted `#A6A99F`. **Border-radius 0 everywhere except circles** (rings, avatars, gauges). 2px borders. Font **Barlow Condensed**. All copy UPPERCASE. The redesign adds depth to every screen (graded cycling photography, accent blooms, telemetry grid, vignettes) — never ship a flat screen. See the memory `pulse-redesign-direction` for the per-screen locked designs.
 - Never `import` `react-native-ble-plx` outside `src/ble/`. The rest of the app talks to the `BikeSource` interface only, so the simulator and the real bike stay interchangeable.
 - Resistance clamps to **1–32**. Units `mi` factor is **0.621**.
 
