@@ -27,3 +27,9 @@ yarn-error.*
 *.pem
 .env*.local
 *.tsbuildinfo
+
+# expo-updates code signing — private key must never be committed
+keys/
+
+# ...but the PUBLIC code-signing certificate must be committed (build embeds it)
+!certs/certificate.pem
