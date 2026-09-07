@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useBike } from '../store/bikeStore';
 import { useSettings } from '../store/settingsStore';
 import { useHistory } from '../store/historyStore';
-import { currentSegment, resCue } from '../engine/rideEngine';
+import { currentSegment, resistanceCue } from '../engine/rideEngine';
 import { bestKmForProgram, ghostAheadKm } from '../engine/records';
 import { convDist, convSpeed, distLabel, speedLabel } from '../engine/formulas';
 import { colors } from '../ui/tokens';
@@ -52,7 +52,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
 
   const cadence = Math.round(session.cadence);
   const targetLabel = seg ? `RPM · TARGET ${seg.lo}–${seg.hi}` : 'RPM · FIND YOUR RHYTHM';
-  const resistanceLabel = 'RESISTANCE ' + session.resistance;
+  const cue = resistanceCue(session); // null on free rides / segments without a target
   const speedFmt = convSpeed(session.speedKmh, units).toFixed(1);
   const distFmt = convDist(session.distanceKm, units).toFixed(1);
   const elapsedFmt = fmt(session.elapsed);
@@ -148,11 +148,24 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
           <T style={{ fontSize: 15, fontWeight: '600', letterSpacing: 4.2, color: colors.text, opacity: 0.85, marginTop: 2, textAlign: 'center' }}>
             {targetLabel}
           </T>
-          <View style={{ marginTop: 12, borderWidth: 2, borderColor: colors.accent, paddingVertical: 5, paddingHorizontal: 15, backgroundColor: 'rgba(9,11,7,0.35)' }}>
-            <T style={{ color: colors.accent, fontSize: 15, fontWeight: '700', letterSpacing: 1.5 }}>
-              {resistanceLabel}
-              {resCue(session)}
-            </T>
+          {/* resistance: live value + plain-language target cue (0–100 scale) */}
+          <View style={{ alignItems: 'center', marginTop: 12, gap: 7 }}>
+            <View style={{ borderWidth: 2, borderColor: colors.surface, backgroundColor: 'rgba(9,11,7,0.4)', paddingVertical: 5, paddingHorizontal: 15 }}>
+              <T style={{ color: colors.text, fontSize: 15, fontWeight: '700', letterSpacing: 1 }}>
+                RESISTANCE <T style={{ fontWeight: '800' }}>{session.resistance}</T>
+              </T>
+            </View>
+            {cue && (cue.onTarget ? (
+              <View style={{ backgroundColor: colors.accent, paddingVertical: 5, paddingHorizontal: 14 }}>
+                <T style={{ color: colors.onAccent, fontSize: 16, fontWeight: '800', letterSpacing: 0.6 }}>✓ ON TARGET</T>
+              </View>
+            ) : (
+              <View style={{ borderWidth: 2, borderColor: colors.accent, backgroundColor: 'rgba(203,255,60,0.08)', paddingVertical: 5, paddingHorizontal: 14 }}>
+                <T style={{ color: colors.accent, fontSize: 16, fontWeight: '800', letterSpacing: 0.6 }}>
+                  {cue.dir === 'down' ? '▼ LOWER' : '▲ RAISE'} TO {cue.target}
+                </T>
+              </View>
+            ))}
           </View>
         </View>
 
@@ -160,7 +173,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () => void }) {
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingBottom: 14 }}>
           <MetricColumn value={speedFmt} label={speedLabel(units)} />
           <MetricColumn value={distFmt} label={distLabel(units)} />
-          <MetricColumn value={String(Math.round(session.power))} label="WATTS" />
+          <MetricColumn value={String(Math.round(session.calories))} label="KCAL" />
           <MetricColumn value={elapsedFmt} label="TIME" />
         </View>
 

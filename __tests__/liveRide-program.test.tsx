@@ -15,7 +15,7 @@ test('program ride shows phase banner + ghost-race strip; PAUSE toggles to PAUSE
   useBike.getState().startRide(PROGRAMS[0]); // HIIT 30
 
   render(<LiveRideScreen onEnd={() => {}} />);
-  await waitFor(() => screen.getByText('WATTS'));
+  await waitFor(() => screen.getByText('KCAL'));
 
   screen.getByText('HIIT 30 · INTERVAL 1/18'); // program header
   screen.getByText('WARM UP');                  // first segment phase banner

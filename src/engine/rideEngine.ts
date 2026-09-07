@@ -37,11 +37,19 @@ export function tick(s: Session, r: BikeReading): { session: Session; finished: 
     finished: false,
   };
 }
-export function resCue(s: Session): string {
-  const seg = currentSegment(s); if (!seg) return '';
-  if (seg.res > s.resistance) return ` ▲${seg.res - s.resistance}`;
-  if (seg.res < s.resistance) return ` ▼${s.resistance - seg.res}`;
-  return '';
+export type ResistanceCue = { target: number; onTarget: boolean; dir: 'up' | 'down' | 'ok' };
+
+// Guidance for hitting the interval's resistance target on the bike's 0–100 scale.
+// Compares the LIVE resistance read from the bike (s.resistance) to the interval's
+// resTarget. Null when there's no target (free ride, or a segment without one).
+// A ±3 tolerance counts as "on target" since the S3 knob is turned by hand.
+export function resistanceCue(s: Session): ResistanceCue | null {
+  const seg = currentSegment(s);
+  if (!seg || seg.resTarget == null) return null;
+  const target = seg.resTarget;
+  const diff = s.resistance - target;
+  if (Math.abs(diff) <= 3) return { target, onTarget: true, dir: 'ok' };
+  return { target, onTarget: false, dir: diff > 0 ? 'down' : 'up' };
 }
 export function buildSummary(s: Session, history: Ride[]): Summary {
   const km = s.distanceKm;

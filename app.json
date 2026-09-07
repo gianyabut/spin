@@ -3,6 +3,7 @@
     "name": "SPIN",
     "slug": "pulse",
     "version": "1.0.0",
+    "runtimeVersion": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -10,7 +11,8 @@
       "bundleIdentifier": "com.pulse.spin",
       "supportsTablet": false,
       "infoPlist": {
-        "NSBluetoothAlwaysUsageDescription": "SPIN connects to your Yesoul S3 bike over Bluetooth to show live ride metrics."
+        "NSBluetoothAlwaysUsageDescription": "SPIN connects to your Yesoul S3 bike over Bluetooth to show live ride metrics.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -20,7 +22,12 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +38,15 @@
       "expo-font",
       "expo-splash-screen",
       "expo-image"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2625231a-3d34-460d-9ebf-f864ba740be9"
+      }
+    },
+    "owner": "ian1k3",
+    "updates": {
+      "url": "https://u.expo.dev/2625231a-3d34-460d-9ebf-f864ba740be9"
+    }
   }
 }
