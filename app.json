@@ -46,7 +46,12 @@
     },
     "owner": "ian1k3",
     "updates": {
-      "url": "https://u.expo.dev/2625231a-3d34-460d-9ebf-f864ba740be9"
+      "url": "https://u.expo.dev/2625231a-3d34-460d-9ebf-f864ba740be9",
+      "codeSigningCertificate": "./certs/certificate.pem",
+      "codeSigningMetadata": {
+        "keyid": "main",
+        "alg": "rsa-v1_5-sha256"
+      }
     }
   }
 }
