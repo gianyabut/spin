@@ -1,4 +1,4 @@
-import { startSession, tick, togglePause, buildSummary, resCue } from '../src/engine/rideEngine';
+import { startSession, tick, togglePause, buildSummary, resistanceCue } from '../src/engine/rideEngine';
 import { PROGRAMS } from '../src/engine/programs';
 import type { BikeReading } from '../src/ble/BikeSource';
 const R = (cadence: number): BikeReading => ({ cadence, ts: 0 });
@@ -32,12 +32,19 @@ test('finishes after the last interval', () => {
   expect(out.finished).toBe(true);
 });
 
-test('resCue shows delta to interval target', () => {
-  let s = startSession(PROGRAMS[0]); // seg0 res 8
-  s = { ...s, resistance: 6 };
-  expect(resCue(s)).toBe(' ▲2');
-  s = { ...s, resistance: 11 };
-  expect(resCue(s)).toBe(' ▼3');
+test('resistanceCue guides toward the interval target on the 0–100 scale', () => {
+  let s = startSession(PROGRAMS[0]); // seg0 WARM UP, resTarget 50
+  s = { ...s, resistance: 77 };
+  expect(resistanceCue(s)).toEqual({ target: 50, onTarget: false, dir: 'down' }); // too high → lower
+  s = { ...s, resistance: 40 };
+  expect(resistanceCue(s)).toEqual({ target: 50, onTarget: false, dir: 'up' });   // too low → raise
+  s = { ...s, resistance: 52 };
+  expect(resistanceCue(s)!.onTarget).toBe(true);                                   // within ±3 → on target
+});
+
+test('resistanceCue is null for a free ride (no interval target)', () => {
+  const s = { ...startSession(null), resistance: 40 };
+  expect(resistanceCue(s)).toBeNull();
 });
 
 test('PB when distance beats history max', () => {

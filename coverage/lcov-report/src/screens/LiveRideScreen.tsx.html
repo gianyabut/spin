@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.59% </span>
+                <span class="strong">78.18% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>39/49</span>
+                <span class='fraction'>43/55</span>
             </div>
         
             
@@ -248,7 +248,20 @@
 <a name='L183'></a><a href='#L183'>183</a>
 <a name='L184'></a><a href='#L184'>184</a>
 <a name='L185'></a><a href='#L185'>185</a>
-<a name='L186'></a><a href='#L186'>186</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -280,8 +293,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -346,6 +359,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">36x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -440,7 +466,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useBike } from '../store/bikeStore';
 import { useSettings } from '../store/settingsStore';
 import { useHistory } from '../store/historyStore';
-import { currentSegment, resCue } from '../engine/rideEngine';
+import { currentSegment, resistanceCue } from '../engine/rideEngine';
 import { bestKmForProgram, ghostAheadKm } from '../engine/records';
 import { convDist, convSpeed, distLabel, speedLabel } from '../engine/formulas';
 import { colors } from '../ui/tokens';
@@ -487,7 +513,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () =&gt; void }) {
 &nbsp;
   const cadence = Math.round(session.cadence);
   const targetLabel = seg ? `RPM · TARGET ${seg.lo}–${seg.hi}` : 'RPM · FIND YOUR RHYTHM';
-  const resistanceLabel = 'RESISTANCE ' + session.resistance;
+  const cue = resistanceCue(session); // null on free rides / segments without a target
   const speedFmt = convSpeed(session.speedKmh, units).toFixed(1);
   const distFmt = convDist(session.distanceKm, units).toFixed(1);
   const elapsedFmt = fmt(session.elapsed);
@@ -583,11 +609,24 @@ export function LiveRideScreen({ onEnd }: { onEnd: () =&gt; void }) {
           &lt;T style={{ fontSize: 15, fontWeight: '600', letterSpacing: 4.2, color: colors.text, opacity: 0.85, marginTop: 2, textAlign: 'center' }}&gt;
             {targetLabel}
           &lt;/T&gt;
-          &lt;View style={{ marginTop: 12, borderWidth: 2, borderColor: colors.accent, paddingVertical: 5, paddingHorizontal: 15, backgroundColor: 'rgba(9,11,7,0.35)' }}&gt;
-            &lt;T style={{ color: colors.accent, fontSize: 15, fontWeight: '700', letterSpacing: 1.5 }}&gt;
-              {resistanceLabel}
-              {resCue(session)}
-            &lt;/T&gt;
+          {/* resistance: live value + plain-language target cue (0–100 scale) */}
+          &lt;View style={{ alignItems: 'center', marginTop: 12, gap: 7 }}&gt;
+            &lt;View style={{ borderWidth: 2, borderColor: colors.surface, backgroundColor: 'rgba(9,11,7,0.4)', paddingVertical: 5, paddingHorizontal: 15 }}&gt;
+              &lt;T style={{ color: colors.text, fontSize: 15, fontWeight: '700', letterSpacing: 1 }}&gt;
+                RESISTANCE &lt;T style={{ fontWeight: '800' }}&gt;{session.resistance}&lt;/T&gt;
+              &lt;/T&gt;
+            &lt;/View&gt;
+            {cue &amp;&amp; (cue.onTarget ? (
+<span class="branch-0 cbranch-no" title="branch not covered" >              &lt;View style={{ backgroundColor: colors.accent, paddingVertical: 5, paddingHorizontal: 14 }}&gt;</span>
+                &lt;T style={{ color: colors.onAccent, fontSize: 16, fontWeight: '800', letterSpacing: 0.6 }}&gt;✓ ON TARGET&lt;/T&gt;
+              &lt;/View&gt;
+            ) : (
+              &lt;View style={{ borderWidth: 2, borderColor: colors.accent, backgroundColor: 'rgba(203,255,60,0.08)', paddingVertical: 5, paddingHorizontal: 14 }}&gt;
+                &lt;T style={{ color: colors.accent, fontSize: 16, fontWeight: '800', letterSpacing: 0.6 }}&gt;
+                  {cue.dir === 'down' ? <span class="branch-0 cbranch-no" title="branch not covered" >'▼ LOWER' </span>: '▲ RAISE'} TO {cue.target}
+                &lt;/T&gt;
+              &lt;/View&gt;
+            ))}
           &lt;/View&gt;
         &lt;/View&gt;
 &nbsp;
@@ -595,7 +634,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () =&gt; void }) {
         &lt;View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingBottom: 14 }}&gt;
           &lt;MetricColumn value={speedFmt} label={speedLabel(units)} /&gt;
           &lt;MetricColumn value={distFmt} label={distLabel(units)} /&gt;
-          &lt;MetricColumn value={String(Math.round(session.power))} label="WATTS" /&gt;
+          &lt;MetricColumn value={String(Math.round(session.calories))} label="KCAL" /&gt;
           &lt;MetricColumn value={elapsedFmt} label="TIME" /&gt;
         &lt;/View&gt;
 &nbsp;
@@ -625,7 +664,7 @@ export function LiveRideScreen({ onEnd }: { onEnd: () =&gt; void }) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-09-05T14:02:51.349Z
+                at 2026-09-07T15:45:36.062Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
