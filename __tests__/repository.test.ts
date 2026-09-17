@@ -7,8 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loadSettings, saveSettings, saveHistory, loadHistory } from '../src/persistence/repository';
 test('round-trips settings with defaults', async () => {
   expect((await loadSettings()).units).toBe('km');
-  await saveSettings({ units:'mi', weeklyGoalKm:60, lastDeviceId:'abc' });
+  await saveSettings({ name:'Sam', units:'mi', weeklyGoalKm:60, lastDeviceId:'abc' });
   expect((await loadSettings()).lastDeviceId).toBe('abc');
+  expect((await loadSettings()).name).toBe('Sam');
 });
 test('round-trips history', async () => {
   await saveHistory([{ id:'1', name:'X', when:'TODAY', min:20, km:9, kcal:200, date:'2026-08-29' }]);

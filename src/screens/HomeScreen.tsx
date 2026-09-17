@@ -29,11 +29,13 @@ export function HomeScreen({
   onRequestConnect: () => void;
 }) {
   const units = useSettings(s => s.units);
+  const name = useSettings(s => s.name);
   const last = useHistory(s => s.rides[0]);
   const connected = useBike(s => s.conn === 'connected');
 
+  const rider = (name.trim() || 'RIDER').toUpperCase();
   const h = new Date().getHours();
-  const greeting = (h < 12 ? 'MORNING' : h < 18 ? 'AFTERNOON' : 'EVENING') + ', SAM';
+  const greeting = (h < 12 ? 'MORNING' : h < 18 ? 'AFTERNOON' : 'EVENING') + ', ' + rider;
 
   const lastRideMeta = last
     ? `${convDist(last.km, units).toFixed(1)} ${distLabel(units)} · ${last.min} MIN · ${last.kcal} KCAL`

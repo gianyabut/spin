@@ -29,6 +29,14 @@ test('settings hydrate loads defaults; setLastDevice persists', async () => {
   useSettings.getState().setLastDevice(null);
 });
 
+test('settings name defaults to empty and setName persists it', async () => {
+  await useSettings.getState().hydrate();
+  expect(useSettings.getState().name).toBe(''); // empty → first-run onboarding shows
+  useSettings.getState().setName('Sam');
+  expect(useSettings.getState().name).toBe('Sam');
+  useSettings.getState().setName('');
+});
+
 test('resDec / setPaused / clearSummary drive the session', () => {
   useBike.getState().setSource(fake());
   useBike.getState().startRide(null); // free ride, resistance starts at 8

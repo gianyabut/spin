@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, ScrollView, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, Pressable, TextInput } from 'react-native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Circle, Line } from 'react-native-svg';
@@ -25,6 +25,14 @@ export function ProfileScreen() {
   const rides = useHistory(s => s.rides);
   const units = useSettings(s => s.units);
   const weeklyGoalKm = useSettings(s => s.weeklyGoalKm);
+  const name = useSettings(s => s.name);
+
+  const rider = (name.trim() || 'RIDER').toUpperCase();
+  const initial = rider.charAt(0);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+  const beginEdit = () => { setDraft(name); setEditing(true); };
+  const saveName = () => { useSettings.getState().setName(draft.trim()); setEditing(false); };
 
   const sumKm = rides.reduce((a, r) => a + r.km, 0);
   const weekKm = convDist(sumKm, units).toFixed(1);
@@ -50,15 +58,34 @@ export function ProfileScreen() {
             locations={[0, 0.34, 0.76, 1]}
             style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
           />
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+          <Pressable onPress={beginEdit} style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
             <View style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: colors.bg, borderWidth: 2, borderColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
-              <T style={{ fontSize: 26, fontWeight: '800' }}>S</T>
+              <T style={{ fontSize: 26, fontWeight: '800' }}>{initial}</T>
             </View>
             <View>
-              <T style={{ fontSize: 34, fontWeight: '800', lineHeight: 31 }}>SAM</T>
+              {editing ? (
+                <TextInput
+                  testID="profile-name-input"
+                  value={draft}
+                  onChangeText={setDraft}
+                  onSubmitEditing={saveName}
+                  onBlur={saveName}
+                  placeholder="YOUR NAME"
+                  placeholderTextColor={colors.muted}
+                  autoCapitalize="characters"
+                  returnKeyType="done"
+                  maxLength={20}
+                  style={{ fontFamily: 'BarlowCondensed_800ExtraBold', fontSize: 34, lineHeight: 34, color: colors.accent, padding: 0, minWidth: 180 }}
+                />
+              ) : (
+                <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 8 }}>
+                  <T style={{ fontSize: 34, fontWeight: '800', lineHeight: 31 }}>{rider}</T>
+                  <T style={{ fontSize: 14, color: colors.muted }}>✎</T>
+                </View>
+              )}
               <T style={{ fontSize: 12, fontWeight: '600', letterSpacing: 1.9, color: colors.text, opacity: 0.9, marginTop: 3 }}>RIDING SINCE MAY 2026</T>
             </View>
-          </View>
+          </Pressable>
         </View>
 
         {/* goal ring */}

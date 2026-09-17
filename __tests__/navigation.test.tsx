@@ -4,6 +4,7 @@ import { render, screen, waitFor, act, fireEvent } from '@testing-library/react-
 import { RootNavigator } from '../src/navigation/RootNavigator';
 import { useBike } from '../src/store/bikeStore';
 import { useHistory } from '../src/store/historyStore';
+import { useSettings } from '../src/store/settingsStore';
 import { startSession } from '../src/engine/rideEngine';
 
 // RTL v14 no longer returns bound queries from render(); use the `screen` object.
@@ -14,9 +15,11 @@ const TABS = ['HOME', 'RIDES', 'PROGRAMS', 'PROFILE'];
 beforeEach(() => {
   useBike.setState({ conn: 'connected', session: null, summary: null });
   useHistory.setState({ rides: [] });
+  useSettings.setState({ name: 'Sam' }); // skip first-run onboarding by default
 });
 afterEach(() => {
   useBike.setState({ conn: 'idle', session: null, summary: null });
+  useSettings.setState({ name: '' });
 });
 
 test('connected + no session/summary → custom tab bar shows all four tabs', async () => {
@@ -39,6 +42,29 @@ test('a ride hides the tab bar entirely (LiveRide shown)', async () => {
   // Tab bar is hidden during a ride; LiveRide content shows instead.
   await waitFor(() => screen.getByText('FREE RIDE'));
   TABS.forEach(label => expect(screen.queryByText(label)).toBeNull());
+});
+
+test('first run (no name saved) → Welcome onboarding shows, not the tabs', async () => {
+  useSettings.setState({ name: '' });
+  render(<RootNavigator />);
+  await waitFor(() => screen.getByText(/YOUR NAME\?/));
+  TABS.forEach(label => expect(screen.queryByText(label)).toBeNull());
+});
+
+test('first run → SKIP dismisses Welcome and reveals the tabs', async () => {
+  useSettings.setState({ name: '' });
+  render(<RootNavigator />);
+  await waitFor(() => screen.getByText('SKIP'));
+  fireEvent.press(screen.getByText('SKIP'));
+  await waitFor(() => screen.getByText('HOME'));
+  expect(screen.queryByText(/YOUR NAME\?/)).toBeNull();
+});
+
+test('returning user (name saved) → no Welcome, tabs shown directly', async () => {
+  useSettings.setState({ name: 'Sam' });
+  render(<RootNavigator />);
+  await waitFor(() => screen.getByText('HOME'));
+  expect(screen.queryByText(/YOUR NAME\?/)).toBeNull();
 });
 
 test('disconnected + no session/summary → tabs are reachable (not trapped on Connect)', async () => {

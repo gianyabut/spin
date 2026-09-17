@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useBike } from '../store/bikeStore';
+import { useSettings } from '../store/settingsStore';
 import { colors } from '../ui/tokens';
+import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { RidesScreen } from '../screens/RidesScreen';
 import { ProgramsScreen } from '../screens/ProgramsScreen';
@@ -34,8 +36,10 @@ import { TabBar, TabKey } from './TabBar';
 export function RootNavigator() {
   const session = useBike(s => s.session);
   const summary = useBike(s => s.summary);
+  const name = useSettings(s => s.name);
   const [activeTab, setActiveTab] = useState<TabKey>('home');
   const [showConnect, setShowConnect] = useState(false);
+  const [onboarded, setOnboarded] = useState(false);
 
   // 1. Post-ride summary — full screen. DONE clears summary (store) → back to tabs.
   if (summary != null) {
@@ -45,6 +49,12 @@ export function RootNavigator() {
   // 2. Active ride — full screen, tab bar hidden. END sets summary (store) → Summary.
   if (session != null) {
     return <LiveRideScreen onEnd={() => {}} />;
+  }
+
+  // 2.5 First-run onboarding — shown once while no name is saved. Entering a name
+  //     sets name (store) so it won't reappear; SKIP sets onboarded locally.
+  if (name === '' && !onboarded) {
+    return <WelcomeScreen onDone={() => setOnboarded(true)} />;
   }
 
   // 3. On-demand Connect — full screen, dismissable. onConnected flips conn (store)
