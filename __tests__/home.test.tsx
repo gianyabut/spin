@@ -22,6 +22,16 @@ test('greeting uses the saved name; falls back to RIDER when unset', async () =>
   await waitFor(() => screen.getByText(/^(MORNING|AFTERNOON|EVENING), RIDER$/));
 });
 
+test('header avatar shows the name initial (not a hardcoded S)', async () => {
+  useBike.setState({ conn: 'connected' });
+  useSettings.setState({ name: 'Alex' });
+  render(<HomeScreen onStartRide={jest.fn()} onRequestConnect={jest.fn()} />);
+  await waitFor(() => expect(screen.getByTestId('home-avatar').props.children).toBe('A'));
+
+  await act(async () => { useSettings.setState({ name: '' }); }); // fallback RIDER → R
+  await waitFor(() => expect(screen.getByTestId('home-avatar').props.children).toBe('R'));
+});
+
 test('connected: renders greeting + START RIDE + LAST RIDE meta; a program card starts that program', async () => {
   await useHistory.getState().hydrate(); // seeds rides so LAST RIDE row has data
   useBike.setState({ conn: 'connected' });

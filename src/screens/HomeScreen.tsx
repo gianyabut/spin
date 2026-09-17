@@ -34,6 +34,7 @@ export function HomeScreen({
   const connected = useBike(s => s.conn === 'connected');
 
   const rider = (name.trim() || 'RIDER').toUpperCase();
+  const initial = rider.charAt(0);
   const h = new Date().getHours();
   const greeting = (h < 12 ? 'MORNING' : h < 18 ? 'AFTERNOON' : 'EVENING') + ', ' + rider;
 
@@ -75,7 +76,7 @@ export function HomeScreen({
             </T>
           </Pressable>
           <View style={{ width: 38, height: 38, borderRadius: 19, backgroundColor: 'rgba(9,11,7,0.4)', borderWidth: 2, borderColor: connected ? colors.accent : colors.muted, alignItems: 'center', justifyContent: 'center' }}>
-            <T style={{ fontSize: 15, fontWeight: '800' }}>S</T>
+            <T testID="home-avatar" style={{ fontSize: 15, fontWeight: '800' }}>{initial}</T>
           </View>
         </View>
 
