@@ -36,6 +36,13 @@ test('tapping the name opens an editor that saves via setName', async () => {
   setNameSpy.mockRestore();
 });
 
+test('renders the 6-week distance trend (moved from Rides)', async () => {
+  await useHistory.getState().hydrate();
+  render(<ProfileScreen />);
+  await waitFor(() => screen.getByText('DISTANCE · LAST 6 WEEKS'));
+  screen.getByText('NOW'); // the current-week bar label
+});
+
 test('renders WEEKLY GOAL card with converted goal value from seeded history', async () => {
   await useHistory.getState().hydrate(); // seeds 3 rides (SEED_HISTORY), sum km = 42.1
 

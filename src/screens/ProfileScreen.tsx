@@ -6,7 +6,7 @@ import Svg, { Circle, Line } from 'react-native-svg';
 import { useHistory } from '../store/historyStore';
 import { useSettings } from '../store/settingsStore';
 import { convDist, distLabel } from '../engine/formulas';
-import { records } from '../engine/records';
+import { records, weeklyKm } from '../engine/records';
 import { colors } from '../ui/tokens';
 import { T } from '../ui/text';
 import { ScreenFrame } from '../ui/components/ScreenFrame';
@@ -43,6 +43,10 @@ export function ProfileScreen() {
 
   const rec = records(rides);
   const bestHiit = rec.byProgram['HIIT 30'] ?? 0;
+
+  // 6-week distance trend (moved here from the Rides screen).
+  const weeks = weeklyKm(rides, 6);
+  const wMax = Math.max(1, ...weeks);
 
   const toggleUnits = () => useSettings.getState().setUnits(units === 'km' ? 'mi' : 'km');
   const dashoffset = C * (1 - weekPct / 100);
@@ -123,6 +127,26 @@ export function ProfileScreen() {
           <Rec value={`${convDist(rec.longestKm, units).toFixed(1)}`} unit={distLabel(units)} label="Longest ride" />
           <Rec value={`${convDist(bestHiit, units).toFixed(1)}`} unit={distLabel(units)} label="Best HIIT 30" divider />
           <Rec value={String(rides.length)} unit="TOTAL" label="Rides" divider />
+        </View>
+
+        {/* 6-week distance trend (moved from Rides) */}
+        <View style={{ paddingHorizontal: 22 }}>
+          <T style={{ fontSize: 11, fontWeight: '700', letterSpacing: 1.6, color: colors.muted, marginTop: 20 }}>
+            DISTANCE · LAST 6 WEEKS
+          </T>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 8, height: 88, marginTop: 10, borderBottomWidth: 2, borderColor: colors.rule }}>
+            {weeks.map((v, i) => {
+              const hi = i === weeks.length - 1;
+              return (
+                <View key={i} style={{ flex: 1, alignItems: 'center', gap: 6 }}>
+                  <View style={{ width: '100%', height: 8 + (v / wMax) * 72, backgroundColor: hi ? colors.accent : colors.surface }} />
+                  <T style={{ fontSize: 9, fontWeight: '700', color: hi ? colors.accent : colors.muted }}>
+                    {hi ? 'NOW' : `W${i + 1}`}
+                  </T>
+                </View>
+              );
+            })}
+          </View>
         </View>
 
         {/* settings */}
