@@ -10,7 +10,9 @@ import { startSession } from '../src/engine/rideEngine';
 // RTL v14 no longer returns bound queries from render(); use the `screen` object.
 // This suite mutates the shared useBike/useHistory stores → reset both slices
 // in before/afterEach so it never bleeds across suites.
-const TABS = ['HOME', 'RIDES', 'PROGRAMS', 'PROFILE'];
+// The tab view is detected by the TabBar's `tab-bar` testID (the bar is now
+// icon-only, so there are no tab text labels to match).
+const TAB_KEYS = ['home', 'rides', 'programs', 'profile'];
 
 beforeEach(() => {
   useBike.setState({ conn: 'connected', session: null, summary: null });
@@ -24,14 +26,13 @@ afterEach(() => {
 
 test('connected + no session/summary → custom tab bar shows all four tabs', async () => {
   render(<RootNavigator />);
-  await waitFor(() => screen.getByText('HOME'));
-  TABS.forEach(label => screen.getByText(label));
+  await waitFor(() => screen.getByTestId('tab-bar'));
+  TAB_KEYS.forEach(k => screen.getByTestId(`tab-${k}`));
 });
 
 test('a ride hides the tab bar entirely (LiveRide shown)', async () => {
   render(<RootNavigator />);
-  await waitFor(() => screen.getByText('HOME')); // tabs present before the ride
-  TABS.forEach(label => screen.getByText(label));
+  await waitFor(() => screen.getByTestId('tab-bar')); // tabs present before the ride
 
   // Set a session directly (no startRide → no 1s timer spins up).
   // The store update drives a synchronous RootNavigator re-render → wrap in act.
@@ -41,14 +42,14 @@ test('a ride hides the tab bar entirely (LiveRide shown)', async () => {
 
   // Tab bar is hidden during a ride; LiveRide content shows instead.
   await waitFor(() => screen.getByText('FREE RIDE'));
-  TABS.forEach(label => expect(screen.queryByText(label)).toBeNull());
+  expect(screen.queryByTestId('tab-bar')).toBeNull();
 });
 
 test('first run (no name saved) → Welcome onboarding shows, not the tabs', async () => {
   useSettings.setState({ name: '' });
   render(<RootNavigator />);
   await waitFor(() => screen.getByText(/YOUR NAME\?/));
-  TABS.forEach(label => expect(screen.queryByText(label)).toBeNull());
+  expect(screen.queryByTestId('tab-bar')).toBeNull();
 });
 
 test('first run → SKIP dismisses Welcome and reveals the tabs', async () => {
@@ -56,14 +57,14 @@ test('first run → SKIP dismisses Welcome and reveals the tabs', async () => {
   render(<RootNavigator />);
   await waitFor(() => screen.getByText('SKIP'));
   fireEvent.press(screen.getByText('SKIP'));
-  await waitFor(() => screen.getByText('HOME'));
+  await waitFor(() => screen.getByTestId('tab-bar'));
   expect(screen.queryByText(/YOUR NAME\?/)).toBeNull();
 });
 
 test('returning user (name saved) → no Welcome, tabs shown directly', async () => {
   useSettings.setState({ name: 'Sam' });
   render(<RootNavigator />);
-  await waitFor(() => screen.getByText('HOME'));
+  await waitFor(() => screen.getByTestId('tab-bar'));
   expect(screen.queryByText(/YOUR NAME\?/)).toBeNull();
 });
 
@@ -71,8 +72,8 @@ test('disconnected + no session/summary → tabs are reachable (not trapped on C
   useBike.setState({ conn: 'idle' });
   render(<RootNavigator />);
   // The tab view shows even without a bike, so history/programs/profile are reachable.
-  await waitFor(() => screen.getByText('HOME'));
-  TABS.forEach(label => screen.getByText(label));
+  await waitFor(() => screen.getByTestId('tab-bar'));
+  TAB_KEYS.forEach(k => screen.getByTestId(`tab-${k}`));
   // The Connect screen is NOT forced on top (its BACK affordance is absent).
   expect(screen.queryByText(/← BACK/)).toBeNull();
 });
@@ -80,14 +81,14 @@ test('disconnected + no session/summary → tabs are reachable (not trapped on C
 test('disconnected → tapping the connect status opens Connect, BACK returns to tabs', async () => {
   useBike.setState({ conn: 'idle' });
   render(<RootNavigator />);
-  await waitFor(() => screen.getByText('HOME'));
+  await waitFor(() => screen.getByTestId('tab-bar'));
 
   // Home's disconnected status opens Find-Your-Bike on demand.
   fireEvent.press(screen.getByText(/NOT CONNECTED/));
   await waitFor(() => screen.getByText(/← BACK/));
-  TABS.forEach(label => expect(screen.queryByText(label)).toBeNull()); // full-screen Connect
+  expect(screen.queryByTestId('tab-bar')).toBeNull(); // full-screen Connect
 
   // BACK dismisses Connect and returns to the tab view.
   fireEvent.press(screen.getByText(/← BACK/));
-  await waitFor(() => screen.getByText('HOME'));
+  await waitFor(() => screen.getByTestId('tab-bar'));
 });

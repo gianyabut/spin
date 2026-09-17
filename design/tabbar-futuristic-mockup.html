@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PULSE — Futuristic bottom nav</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#0F110E;--surface:#2F322C;--rule:#242820;--text:#F4F1EC;--muted:#A6A99F;--accent:#CBFF3C;--onAccent:#101208;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#17190f;font-family:'Barlow Condensed',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;padding:40px 24px 64px;}
+  h1.page{font-size:26px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;}
+  p.page{color:var(--muted);font-size:15px;font-weight:600;max-width:980px;margin-bottom:28px;}
+  .stage{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start;}
+  .col{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .tag{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);text-align:center;}
+  .tag small{display:block;color:var(--muted);letter-spacing:.03em;font-weight:600;margin-top:2px;max-width:280px;}
+  .phone{width:300px;height:600px;border-radius:46px;background:#000;padding:11px;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 2px #26281f;position:relative;}
+  .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--bg);position:relative;}
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:110px;height:26px;background:#000;border-radius:16px;z-index:40;}
+  .backdrop{position:absolute;top:56px;left:22px;right:22px;}
+  .backdrop .t{font-size:30px;font-weight:800;}
+  .backdrop .s{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--muted);margin-top:2px;}
+  .backdrop .ph{margin-top:16px;height:150px;background:linear-gradient(160deg,#20241b,#14160f);border:2px solid var(--rule);}
+  .backdrop .ln{height:2px;background:var(--rule);margin-top:18px;}
+  .backdrop .ln2{height:2px;background:var(--rule);margin-top:44px;}
+  .home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:120px;height:4px;border-radius:2px;background:#3a3d34;z-index:50;}
+  .cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;}
+  .lbl{font-weight:800;letter-spacing:.12em;}
+  @keyframes glow{0%,100%{opacity:.55}50%{opacity:1}}
+  .cap{font-size:13px;color:var(--muted);max-width:280px;text-align:center;line-height:1.5;}
+  .cap b{color:var(--text);font-weight:700;}
+
+  /* ---- A: glow capsule (icon-only, active in a glowing lime disc) ---- */
+  .A .bar{position:absolute;left:24px;right:24px;bottom:26px;height:64px;display:flex;align-items:center;
+    background:rgba(20,22,15,.92);border:1.5px solid #343829;border-radius:34px;
+    box-shadow:0 12px 30px rgba(0,0,0,.5), inset 0 0 0 1px rgba(203,255,60,.05);}
+  .A .disc{width:46px;height:46px;border-radius:23px;background:var(--accent);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 18px 2px rgba(203,255,60,.6);animation:glow 2.4s ease-in-out infinite;}
+
+  /* ---- B: sliding glow indicator (full-width, energy bar under active) ---- */
+  .B .bar{position:absolute;left:0;right:0;bottom:0;height:84px;padding-bottom:22px;display:flex;
+    background:var(--bg);border-top:1.5px solid #23271d;}
+  .B .cell{position:relative;padding-top:12px;}
+  .B .cell.on::after{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;background:var(--accent);
+    box-shadow:0 0 12px 1px rgba(203,255,60,.8);}
+  .B .halo{position:absolute;top:-4px;width:52px;height:34px;border-radius:26px;background:rgba(203,255,60,.14);filter:blur(6px);}
+
+  /* ---- C: elevated active node (active lifts into a glowing disc above the bar) ---- */
+  .C .bar{position:absolute;left:18px;right:18px;bottom:24px;height:60px;display:flex;align-items:flex-end;justify-content:space-around;padding-bottom:9px;
+    background:rgba(18,20,14,.94);border:1.5px solid #313528;border-radius:20px;}
+  .C .node{position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:56px;height:56px;border-radius:28px;
+    background:var(--accent);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 22px 3px rgba(203,255,60,.55);animation:glow 2.4s ease-in-out infinite;}
+</style>
+</head>
+<body>
+  <h1 class="page">PULSE — futuristic bottom nav · three directions</h1>
+  <p class="page">Modern, HUD-flavored. All fix tappability (full cells + hitSlop). Active state uses a lime <b>glow</b>. These use rounded floating shapes — a deliberate step past the strict 0-radius rule for a more futuristic feel. Pick 1, 2, or 3.</p>
+
+  <div class="stage">
+
+    <!-- A -->
+    <div class="col">
+      <div class="tag">1 · Glow capsule<small>Floating capsule, icon-forward. Active sits in a pulsing lime disc; label only on active.</small></div>
+      <div class="phone A"><div class="notch"></div><div class="screen">
+        <div class="backdrop"><div class="t">MORNING, SAM</div><div class="s">READY WHEN YOU ARE</div><div class="ph"></div><div class="ln"></div><div class="ln2"></div></div>
+        <div class="bar">
+          <div class="cell"><div class="disc"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#101208" stroke-width="2.2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div></div>
+          <div class="cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg></div>
+          <div class="cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <div class="cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+      <div class="cap">Minimal & sleek. The <b>glowing lime disc</b> marks where you are; icons keep it clean. (Linear / Savee vibe.)</div>
+    </div>
+
+    <!-- B -->
+    <div class="col">
+      <div class="tag">2 · Energy indicator<small>Full-width HUD bar; a glowing lime bar + halo sits under the active tab (slides between tabs).</small></div>
+      <div class="phone B"><div class="notch"></div><div class="screen">
+        <div class="backdrop"><div class="t">MORNING, SAM</div><div class="s">READY WHEN YOU ARE</div><div class="ph"></div><div class="ln"></div><div class="ln2"></div></div>
+        <div class="bar">
+          <div class="cell on"><div class="halo"></div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBFF3C" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl" style="color:var(--accent);font-size:11px">HOME</div></div>
+          <div class="cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg><div class="lbl" style="color:var(--muted);font-size:11px">RIDES</div></div>
+          <div class="cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><div class="lbl" style="color:var(--muted);font-size:11px">PROGRAMS</div></div>
+          <div class="cell"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><div class="lbl" style="color:var(--muted);font-size:11px">PROFILE</div></div>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+      <div class="cap">Keeps labels; a <b>glowing “energy” bar</b> + soft halo slides to the active tab. Reads like the ride HUD.</div>
+    </div>
+
+    <!-- C -->
+    <div class="col">
+      <div class="tag">3 · Elevated node<small>Floating bar; the active tab lifts into a glowing lime disc above the bar. Game-HUD bold.</small></div>
+      <div class="phone C"><div class="notch"></div><div class="screen">
+        <div class="backdrop"><div class="t">MORNING, SAM</div><div class="s">READY WHEN YOU ARE</div><div class="ph"></div><div class="ln"></div><div class="ln2"></div></div>
+        <div class="bar">
+          <div class="cell" style="position:relative;flex:1">
+            <div class="node"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#101208" stroke-width="2.2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div>
+            <div class="lbl" style="color:var(--accent);font-size:10px">HOME</div>
+          </div>
+          <div class="cell" style="flex:1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg><div class="lbl" style="color:var(--muted);font-size:10px">RIDES</div></div>
+          <div class="cell" style="flex:1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><div class="lbl" style="color:var(--muted);font-size:10px">PROGRAMS</div></div>
+          <div class="cell" style="flex:1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><div class="lbl" style="color:var(--muted);font-size:10px">PROFILE</div></div>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+      <div class="cap">The active tab <b>pops out</b> as a glowing disc above the bar — boldest, most “performance HUD”. (BeReal / Mindvalley energy.)</div>
+    </div>
+
+  </div>
+</body>
+</html>

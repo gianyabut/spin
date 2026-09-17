@@ -69,11 +69,13 @@ export function RootNavigator() {
     );
   }
 
-  // 4. The tab view — always reachable, connected or not.
+  // 4. The tab view — always reachable, connected or not. The TabBar floats
+  //    (absolute) over the content, so reserve bottom space with paddingBottom
+  //    so each screen's content clears the capsule.
   const openConnect = () => setShowConnect(true);
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingBottom: 96 }}>
         {activeTab === 'home' && <HomeScreen onStartRide={() => {}} onRequestConnect={openConnect} />}
         {activeTab === 'rides' && <RidesScreen />}
         {activeTab === 'programs' && <ProgramsScreen onStartRide={() => {}} onRequestConnect={openConnect} />}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PULSE — Bottom nav mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#0F110E;--surface:#2F322C;--rule:#242820;--text:#F4F1EC;--muted:#A6A99F;--accent:#CBFF3C;--onAccent:#101208;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#17190f;font-family:'Barlow Condensed',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;padding:40px 24px 64px;}
+  h1.page{font-size:26px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px;}
+  p.page{color:var(--muted);font-size:15px;font-weight:600;max-width:980px;margin-bottom:28px;}
+  .stage{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start;}
+  .col{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .tag{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);text-align:center;}
+  .tag small{display:block;color:var(--muted);letter-spacing:.03em;font-weight:600;margin-top:2px;max-width:280px;}
+  .phone{width:300px;height:600px;border-radius:46px;background:#000;padding:11px;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 2px #26281f;position:relative;}
+  .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--bg);position:relative;}
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:110px;height:26px;background:#000;border-radius:16px;z-index:40;}
+  .backdrop{position:absolute;top:56px;left:22px;right:22px;}
+  .backdrop .t{font-size:30px;font-weight:800;}
+  .backdrop .s{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--muted);margin-top:2px;}
+  .backdrop .ph{margin-top:16px;height:150px;background:linear-gradient(160deg,#20241b,#14160f);border:2px solid var(--rule);}
+  .backdrop .ln{height:2px;background:var(--rule);margin-top:18px;}
+  .backdrop .ln2{height:2px;background:var(--rule);margin-top:44px;}
+  svg{display:block;}
+  .home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:120px;height:4px;border-radius:2px;background:#3a3d34;z-index:50;}
+
+  /* shared nav base */
+  .nav{position:absolute;left:0;right:0;bottom:0;background:var(--bg);}
+  .cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+  .lbl{font-size:12px;font-weight:800;letter-spacing:.14em;}
+
+  /* D1: icon + label, active bar on top of cell */
+  .d1{display:flex;border-top:2px solid var(--rule);height:82px;padding-bottom:22px;}
+  .d1 .cell{position:relative;padding-top:6px;}
+  .d1 .cell.on::before{content:"";position:absolute;top:0;left:24%;right:24%;height:3px;background:var(--accent);}
+
+  /* D2: active = solid lime block */
+  .d2{display:flex;border-top:2px solid var(--rule);height:82px;padding:8px 8px 24px;gap:6px;}
+  .d2 .cell{padding:6px 4px;}
+  .d2 .cell.on{background:var(--accent);}
+
+  /* D3: floating hard-edged bar */
+  .d3wrap{position:absolute;left:14px;right:14px;bottom:16px;}
+  .d3{display:flex;border:2px solid var(--surface);background:#141610;height:66px;}
+  .d3 .cell{padding:4px;}
+
+  .cap{font-size:13px;color:var(--muted);max-width:280px;text-align:center;line-height:1.5;}
+  .cap b{color:var(--text);font-weight:700;}
+</style>
+</head>
+<body>
+  <h1 class="page">PULSE — bottom nav · three directions</h1>
+  <p class="page">All three fix the real bug: the whole cell becomes tappable (~52px+ tall, full width, plus hitSlop) instead of just the text line. They differ in style. Icons added for a bigger, clearer target. Pick 1, 2, or 3.</p>
+
+  <div class="stage">
+
+    <!-- Direction 1 -->
+    <div class="col">
+      <div class="tag">1 · Icons + labels<small>Classic & clearest. Active = lime icon+label + accent bar on top of the cell.</small></div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="backdrop"><div class="t">MORNING, SAM</div><div class="s">READY WHEN YOU ARE</div><div class="ph"></div><div class="ln"></div><div class="ln2"></div></div>
+        <div class="nav d1">
+          <div class="cell on">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBFF3C" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+            <div class="lbl" style="color:var(--accent)">HOME</div>
+          </div>
+          <div class="cell">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg>
+            <div class="lbl" style="color:var(--muted)">RIDES</div>
+          </div>
+          <div class="cell">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <div class="lbl" style="color:var(--muted)">PROGRAMS</div>
+          </div>
+          <div class="cell">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+            <div class="lbl" style="color:var(--muted)">PROFILE</div>
+          </div>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+      <div class="cap">Every cell is a <b>full-height column</b> — icon + label both tappable. Active tab lifts with a lime bar + lime icon.</div>
+    </div>
+
+    <!-- Direction 2 -->
+    <div class="col">
+      <div class="tag">2 · Lime active block<small>Most on-brand: active tab is a solid lime rectangle (like PULSE buttons), dark text.</small></div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="backdrop"><div class="t">MORNING, SAM</div><div class="s">READY WHEN YOU ARE</div><div class="ph"></div><div class="ln"></div><div class="ln2"></div></div>
+        <div class="nav d2">
+          <div class="cell on">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#101208" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+            <div class="lbl" style="color:var(--onAccent)">HOME</div>
+          </div>
+          <div class="cell">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg>
+            <div class="lbl" style="color:var(--muted)">RIDES</div>
+          </div>
+          <div class="cell">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <div class="lbl" style="color:var(--muted)">PROGRAMS</div>
+          </div>
+          <div class="cell">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+            <div class="lbl" style="color:var(--muted)">PROFILE</div>
+          </div>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+      <div class="cap">Active state is unmistakable — a <b>solid lime block</b> matching the app's buttons. Big rectangular targets.</div>
+    </div>
+
+    <!-- Direction 3 -->
+    <div class="col">
+      <div class="tag">3 · Floating bar<small>Modern floating look, hard-edged (0 radius) to fit PULSE. Detached above the home indicator.</small></div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="backdrop"><div class="t">MORNING, SAM</div><div class="s">READY WHEN YOU ARE</div><div class="ph"></div><div class="ln"></div><div class="ln2"></div></div>
+        <div class="d3wrap"><div class="nav d3" style="position:static;">
+          <div class="cell">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#CBFF3C" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+            <div class="lbl" style="color:var(--accent);font-size:10px">HOME</div>
+          </div>
+          <div class="cell">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/></svg>
+            <div class="lbl" style="color:var(--muted);font-size:10px">RIDES</div>
+          </div>
+          <div class="cell">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <div class="lbl" style="color:var(--muted);font-size:10px">PROGRAMS</div>
+          </div>
+          <div class="cell">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#A6A99F" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+            <div class="lbl" style="color:var(--muted);font-size:10px">PROFILE</div>
+          </div>
+        </div></div>
+        <div class="home-ind"></div>
+      </div></div>
+      <div class="cap">Bar floats with a 2px border all around (still square corners). Feels modern; slightly smaller labels to fit.</div>
+    </div>
+
+  </div>
+</body>
+</html>
