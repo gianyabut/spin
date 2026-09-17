@@ -33,7 +33,6 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-dev-client",
       "react-native-ble-plx",
       "expo-font",
       "expo-splash-screen",
@@ -46,7 +45,10 @@
     },
     "owner": "ian1k3",
     "updates": {
-      "url": "https://u.expo.dev/2625231a-3d34-460d-9ebf-f864ba740be9"
+      "url": "https://u.expo.dev/2625231a-3d34-460d-9ebf-f864ba740be9",
+      "requestHeaders": {
+        "expo-channel-name": "production"
+      }
     }
   }
 }
