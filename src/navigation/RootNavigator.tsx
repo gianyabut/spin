@@ -13,26 +13,29 @@ import { TabBar, TabKey } from './TabBar';
 
 /**
  * Store-state-driven root (plan ruling R9) — NOT React Navigation.
- * Subscribes to useBike and picks the screen purely from store state, exactly
- * matching the plan's "screen selection follows useBike.session/summary/conn".
+ * Subscribes to useBike and picks the screen from store state, plus one piece of
+ * local UI state (showConnect) for the on-demand Find-Your-Bike overlay.
  *
  * Routing priority:
- *   1. summary != null       → SummaryScreen   (full screen, no tab bar)
- *   2. session != null       → LiveRideScreen  (full screen, no tab bar — "hidden during a ride")
- *   3. conn === 'connected'  → tab view (Home/Rides/Programs/Profile + custom TabBar)
- *   4. else                  → ConnectScreen   (full screen, no tab bar)
+ *   1. summary != null   → SummaryScreen   (full screen, no tab bar)
+ *   2. session != null   → LiveRideScreen  (full screen, no tab bar — "hidden during a ride")
+ *   3. showConnect       → ConnectScreen   (full screen, reached on demand, dismissable)
+ *   4. else              → tab view (Home/Rides/Programs/Profile + custom TabBar)
  *
- * Because routing is store-driven, the screen callbacks are effectively no-ops:
- * each transition is caused by the store action the screen already calls
- * (startRide sets session → LiveRide; endRide sets summary → Summary;
- * clearSummary clears summary → tabs; connect sets conn='connected' → tabs).
- * We only reset activeTab to 'home' so a fresh tab session starts on Home.
+ * The tab view is ALWAYS reachable — connected or not — so history, programs and
+ * profile can be browsed without a bike. Connect is no longer a launch gate: it is
+ * opened on demand (via onRequestConnect from Home/Programs) and dismissed via its
+ * BACK control. A successful connect flips conn='connected' in the store; the ride
+ * affordances then start rides instead of re-opening Connect.
+ *
+ * Store-driven transitions still hold: startRide sets session → LiveRide; endRide
+ * sets summary → Summary; clearSummary clears summary → tabs.
  */
 export function RootNavigator() {
-  const conn = useBike(s => s.conn);
   const session = useBike(s => s.session);
   const summary = useBike(s => s.summary);
   const [activeTab, setActiveTab] = useState<TabKey>('home');
+  const [showConnect, setShowConnect] = useState(false);
 
   // 1. Post-ride summary — full screen. DONE clears summary (store) → back to tabs.
   if (summary != null) {
@@ -44,23 +47,29 @@ export function RootNavigator() {
     return <LiveRideScreen onEnd={() => {}} />;
   }
 
-  // 3. Connected — the tab view with the custom TabBar.
-  if (conn === 'connected') {
+  // 3. On-demand Connect — full screen, dismissable. onConnected flips conn (store)
+  //    and closes the overlay; BACK just closes it (stay disconnected, keep browsing).
+  if (showConnect) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.bg }}>
-        <View style={{ flex: 1 }}>
-          {activeTab === 'home' && <HomeScreen onStartRide={() => {}} />}
-          {activeTab === 'rides' && <RidesScreen />}
-          {activeTab === 'programs' && <ProgramsScreen onStartRide={() => {}} />}
-          {activeTab === 'profile' && <ProfileScreen />}
-        </View>
-        <TabBar active={activeTab} onSelect={setActiveTab} />
-      </View>
+      <ConnectScreen
+        source={useBike.getState().source}
+        onConnected={() => setShowConnect(false)}
+        onClose={() => setShowConnect(false)}
+      />
     );
   }
 
-  // 4. Not connected — full-screen Connect. onConnected sets conn (store) → tabs.
+  // 4. The tab view — always reachable, connected or not.
+  const openConnect = () => setShowConnect(true);
   return (
-    <ConnectScreen source={useBike.getState().source} onConnected={() => setActiveTab('home')} />
+    <View style={{ flex: 1, backgroundColor: colors.bg }}>
+      <View style={{ flex: 1 }}>
+        {activeTab === 'home' && <HomeScreen onStartRide={() => {}} onRequestConnect={openConnect} />}
+        {activeTab === 'rides' && <RidesScreen />}
+        {activeTab === 'programs' && <ProgramsScreen onStartRide={() => {}} onRequestConnect={openConnect} />}
+        {activeTab === 'profile' && <ProfileScreen />}
+      </View>
+      <TabBar active={activeTab} onSelect={setActiveTab} />
+    </View>
   );
 }

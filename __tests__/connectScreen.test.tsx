@@ -14,3 +14,13 @@ test('shows discovered device then connects', async () => {
   await waitFor(() => expect(onConnected).toHaveBeenCalled());
   await src.disconnect(); // stop the sim's data interval so jest exits cleanly
 });
+
+test('renders a BACK control that fires onClose when Connect is dismissable', async () => {
+  const src = new SimulatedBikeSource();
+  const onClose = jest.fn();
+  render(<ConnectScreen source={src} onConnected={jest.fn()} onClose={onClose} />);
+  await waitFor(() => screen.getByText(/BACK/));
+  fireEvent.press(screen.getByText(/BACK/));
+  expect(onClose).toHaveBeenCalledTimes(1);
+  await src.disconnect();
+});

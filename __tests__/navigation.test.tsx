@@ -1,6 +1,6 @@
 jest.mock('@react-native-async-storage/async-storage', () => ({ setItem: () => Promise.resolve(), getItem: () => Promise.resolve(null) }));
 import React from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react-native';
+import { render, screen, waitFor, act, fireEvent } from '@testing-library/react-native';
 import { RootNavigator } from '../src/navigation/RootNavigator';
 import { useBike } from '../src/store/bikeStore';
 import { useHistory } from '../src/store/historyStore';
@@ -39,4 +39,29 @@ test('a ride hides the tab bar entirely (LiveRide shown)', async () => {
   // Tab bar is hidden during a ride; LiveRide content shows instead.
   await waitFor(() => screen.getByText('FREE RIDE'));
   TABS.forEach(label => expect(screen.queryByText(label)).toBeNull());
+});
+
+test('disconnected + no session/summary → tabs are reachable (not trapped on Connect)', async () => {
+  useBike.setState({ conn: 'idle' });
+  render(<RootNavigator />);
+  // The tab view shows even without a bike, so history/programs/profile are reachable.
+  await waitFor(() => screen.getByText('HOME'));
+  TABS.forEach(label => screen.getByText(label));
+  // The Connect screen is NOT forced on top (its BACK affordance is absent).
+  expect(screen.queryByText(/← BACK/)).toBeNull();
+});
+
+test('disconnected → tapping the connect status opens Connect, BACK returns to tabs', async () => {
+  useBike.setState({ conn: 'idle' });
+  render(<RootNavigator />);
+  await waitFor(() => screen.getByText('HOME'));
+
+  // Home's disconnected status opens Find-Your-Bike on demand.
+  fireEvent.press(screen.getByText(/NOT CONNECTED/));
+  await waitFor(() => screen.getByText(/← BACK/));
+  TABS.forEach(label => expect(screen.queryByText(label)).toBeNull()); // full-screen Connect
+
+  // BACK dismisses Connect and returns to the tab view.
+  fireEvent.press(screen.getByText(/← BACK/));
+  await waitFor(() => screen.getByText('HOME'));
 });

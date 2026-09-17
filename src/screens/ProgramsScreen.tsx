@@ -23,8 +23,18 @@ const FALLBACK = require('../../assets/photos/ride-hero.jpg');
  * name, description and a START action. START seeds the session via
  * startRide(program) then calls onStartRide (unchanged behaviour).
  */
-export function ProgramsScreen({ onStartRide }: { onStartRide: () => void }) {
+export function ProgramsScreen({
+  onStartRide,
+  onRequestConnect,
+}: {
+  onStartRide: () => void;
+  onRequestConnect: () => void;
+}) {
+  const connected = useBike(s => s.conn === 'connected');
+  // Riding needs a live bike — when disconnected, START routes to Find-Your-Bike
+  // instead of starting a dataless ride.
   const start = (p: Program) => {
+    if (!connected) return onRequestConnect();
     useBike.getState().startRide(p);
     onStartRide();
   };

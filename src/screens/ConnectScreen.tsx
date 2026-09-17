@@ -19,9 +19,11 @@ const RADAR = 240; // px
 export function ConnectScreen({
   source,
   onConnected,
+  onClose,
 }: {
   source: BikeSource;
   onConnected: () => void;
+  onClose?: () => void;
 }) {
   const [device, setDevice] = useState<DiscoveredDevice | null>(null);
   const [connecting, setConnecting] = useState(false);
@@ -60,6 +62,17 @@ export function ConnectScreen({
 
   return (
     <ScreenFrame style={{ paddingTop: 64, paddingHorizontal: 22, paddingBottom: 30 }}>
+      {/* BACK — only when Connect is dismissable (reached on demand, not the launch gate) */}
+      {onClose && (
+        <Pressable
+          onPress={onClose}
+          hitSlop={12}
+          style={({ pressed }) => ({ position: 'absolute', top: 60, left: 20, opacity: pressed ? 0.6 : 1 })}
+        >
+          <T style={{ fontSize: 13, fontWeight: '800', letterSpacing: 2, color: colors.muted }}>← BACK</T>
+        </Pressable>
+      )}
+
       {/* eyebrow + title */}
       <View style={{ alignItems: 'center' }}>
         <T style={{ fontSize: 12, fontWeight: '700', letterSpacing: 2.9, color: found ? colors.accent : colors.muted }}>

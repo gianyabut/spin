@@ -21,9 +21,16 @@ const HERO = require('../../assets/photos/ride-hero.jpg');
  * Behaviour is unchanged: START RIDE begins a free ride, a program row starts
  * that program, both seed the session then call onStartRide.
  */
-export function HomeScreen({ onStartRide }: { onStartRide: () => void }) {
+export function HomeScreen({
+  onStartRide,
+  onRequestConnect,
+}: {
+  onStartRide: () => void;
+  onRequestConnect: () => void;
+}) {
   const units = useSettings(s => s.units);
   const last = useHistory(s => s.rides[0]);
+  const connected = useBike(s => s.conn === 'connected');
 
   const h = new Date().getHours();
   const greeting = (h < 12 ? 'MORNING' : h < 18 ? 'AFTERNOON' : 'EVENING') + ', SAM';
@@ -32,11 +39,15 @@ export function HomeScreen({ onStartRide }: { onStartRide: () => void }) {
     ? `${convDist(last.km, units).toFixed(1)} ${distLabel(units)} · ${last.min} MIN · ${last.kcal} KCAL`
     : '—';
 
+  // Riding needs a live bike. When disconnected, every start affordance instead
+  // routes to Find-Your-Bike so a real S3 never produces a dataless ride.
   const startFree = () => {
+    if (!connected) return onRequestConnect();
     useBike.getState().startRide(null);
     onStartRide();
   };
   const startProgram = (p: Program) => {
+    if (!connected) return onRequestConnect();
     useBike.getState().startRide(p);
     onStartRide();
   };
@@ -54,10 +65,14 @@ export function HomeScreen({ onStartRide }: { onStartRide: () => void }) {
           style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
         />
 
-        {/* status + avatar */}
+        {/* status + avatar — tapping the status opens Find-Your-Bike when disconnected */}
         <View style={{ position: 'absolute', top: 58, left: 22, right: 22, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <T style={{ fontSize: 13, fontWeight: '700', letterSpacing: 1.3, color: colors.accent }}>● S3 CONNECTED · READY TO RIDE</T>
-          <View style={{ width: 38, height: 38, borderRadius: 19, backgroundColor: 'rgba(9,11,7,0.4)', borderWidth: 2, borderColor: colors.accent, alignItems: 'center', justifyContent: 'center' }}>
+          <Pressable onPress={connected ? undefined : onRequestConnect} hitSlop={10}>
+            <T style={{ fontSize: 13, fontWeight: '700', letterSpacing: 1.3, color: connected ? colors.accent : colors.muted }}>
+              {connected ? '● S3 CONNECTED · READY TO RIDE' : '○ NOT CONNECTED · TAP TO CONNECT'}
+            </T>
+          </Pressable>
+          <View style={{ width: 38, height: 38, borderRadius: 19, backgroundColor: 'rgba(9,11,7,0.4)', borderWidth: 2, borderColor: connected ? colors.accent : colors.muted, alignItems: 'center', justifyContent: 'center' }}>
             <T style={{ fontSize: 15, fontWeight: '800' }}>S</T>
           </View>
         </View>
@@ -65,7 +80,7 @@ export function HomeScreen({ onStartRide }: { onStartRide: () => void }) {
         {/* greeting + START block (bottom of hero) */}
         <T style={{ fontSize: 50, fontWeight: '800', lineHeight: 47, letterSpacing: 0.5 }}>{greeting}</T>
         <T style={{ fontSize: 13, fontWeight: '600', letterSpacing: 1.8, color: colors.text, opacity: 0.9, marginTop: 8, marginBottom: 14 }}>
-          READY WHEN YOU ARE — JUST PEDAL
+          {connected ? 'READY WHEN YOU ARE — JUST PEDAL' : 'CONNECT YOUR S3 TO START RIDING'}
         </T>
         <Pressable
           onPress={startFree}
@@ -76,8 +91,12 @@ export function HomeScreen({ onStartRide }: { onStartRide: () => void }) {
           })}
         >
           <View>
-            <T style={{ color: colors.onAccent, fontSize: 26, fontWeight: '800', lineHeight: 24 }}>START RIDE</T>
-            <T style={{ color: colors.onAccent, fontSize: 12, fontWeight: '600', letterSpacing: 1.2, marginTop: 2 }}>FREE RIDE</T>
+            <T style={{ color: colors.onAccent, fontSize: 26, fontWeight: '800', lineHeight: 24 }}>
+              {connected ? 'START RIDE' : 'CONNECT TO RIDE'}
+            </T>
+            <T style={{ color: colors.onAccent, fontSize: 12, fontWeight: '600', letterSpacing: 1.2, marginTop: 2 }}>
+              {connected ? 'FREE RIDE' : 'FIND YOUR BIKE'}
+            </T>
           </View>
           <T style={{ color: colors.onAccent, fontSize: 30, fontWeight: '800' }}>→</T>
         </Pressable>
